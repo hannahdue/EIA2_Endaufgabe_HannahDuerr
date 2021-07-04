@@ -22,10 +22,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         draw(): void {
             //draw
             crc2.save();
-            
-            //bis neues canvas gemacht wird mal ausgleichen:
-            crc2.translate(-90, -5);
-
+        
             //draw player center
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);

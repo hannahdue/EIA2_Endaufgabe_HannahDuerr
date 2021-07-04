@@ -55,6 +55,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     ];
     let moveables = [];
     let allPlayers = [];
+    let sparePlayers = [];
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         //get the canvas and the rendering context
@@ -70,17 +71,13 @@ var EIA2_Endaufgabe_HannahDuerr;
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
+        canvas.addEventListener("click", moveBall);
         //install change-listener to all fieldset elements to get the data from the user preferences
         let fieldsets = document.querySelectorAll("fieldset");
         for (let i = 0; i < fieldsets.length; i++) {
             let fieldset = fieldsets[i];
             fieldset.addEventListener("change", handleChange);
         }
-        //create the background and the ball
-        field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
-        field.draw();
-        EIA2_Endaufgabe_HannahDuerr.ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
-        moveables.push(EIA2_Endaufgabe_HannahDuerr.ball);
     }
     function randomBetween(_min, _max) {
         return _min + Math.random() * (_max - _min);
@@ -90,6 +87,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         //hide settings container
         landingPage.style.display = "none";
         console.log(minimumSpeed, maximumSpeed, minimumPrecision, maximumPrecision, teamAColor, teamBColor);
+        //create the background and the ball
+        field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
+        EIA2_Endaufgabe_HannahDuerr.ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
+        moveables.push(EIA2_Endaufgabe_HannahDuerr.ball);
+        //create people
         createPeopleOnField();
         //start animation
         animation = true;
@@ -101,8 +103,14 @@ var EIA2_Endaufgabe_HannahDuerr;
     function restartSimulation() {
         //show setings container again
         landingPage.style.display = "";
-        //stop animation
+        //stop animation and reset values to default
         animation = false;
+        minimumSpeed = 1;
+        maximumSpeed = 5;
+        minimumPrecision = 1;
+        maximumPrecision = 5;
+        teamAColor = "66b2ff";
+        teamBColor = "ff3333";
     }
     function pauseSimulation() {
         if (animation == true) {
@@ -138,18 +146,24 @@ var EIA2_Endaufgabe_HannahDuerr;
             }
             const player = new EIA2_Endaufgabe_HannahDuerr.Player(position, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
             // bekommen noch Geschwindigkeit und Präzision
-            //Feldspieler in moveables, alle Spieler in allPlayers
+            //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
             allPlayers.push(player);
             if (jerseyNumber <= 22) {
                 moveables.push(player);
             }
+            else if (jerseyNumber > 22) {
+                sparePlayers.push(player);
+            }
         }
         //Schiedsrichter und zwei Linienmänner werden kreiert:
         const referee = new EIA2_Endaufgabe_HannahDuerr.Referee(new EIA2_Endaufgabe_HannahDuerr.Vector(20, 20 + 800));
-        const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, 10));
-        const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 10));
+        const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, 15));
+        const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 15));
         //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);
+    }
+    function moveBall(_event) {
+        //get the position of the click and move the ball to this position
     }
     function update() {
         //draw the background
@@ -158,6 +172,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         for (let moveable of moveables) {
             moveable.move();
             moveable.draw();
+        }
+        for (let sparePlayer of sparePlayers) {
+            sparePlayer.draw();
         }
         let scoreDisplay = document.querySelector("div#score");
         scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?"; //add jerseyNumber of player in possesion of the ball 

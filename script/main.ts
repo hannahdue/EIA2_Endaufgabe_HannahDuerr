@@ -66,6 +66,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     ];
     let moveables: Moveable[] = [];
     let allPlayers: Player[] = [];
+    let sparePlayers: Player[] = [];
 
     window.addEventListener("load", handleLoad);
 
@@ -85,6 +86,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
+        canvas.addEventListener("click", moveBall);
 
         //install change-listener to all fieldset elements to get the data from the user preferences
         let fieldsets: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll("fieldset");
@@ -92,12 +94,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             let fieldset: HTMLFieldSetElement = fieldsets[i];
             fieldset.addEventListener("change", handleChange);
         }
-
-        //create the background and the ball
-        field = new Playingfield();
-        field.draw();
-        ball = new Ball(new Vector(500, 275));
-        moveables.push(ball);
     }
 
     export function randomBetween(_min: number, _max: number): number {
@@ -110,20 +106,31 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         console.log(minimumSpeed, maximumSpeed, minimumPrecision, maximumPrecision, teamAColor, teamBColor);
 
+        //create the background and the ball
+        field = new Playingfield();
+        ball = new Ball(new Vector(500, 275));
+        moveables.push(ball);
+        //create people
         createPeopleOnField();
         //start animation
         animation = true;
         window.setInterval(function (): void {
             if (animation == true)
                 update();
-        },                 20);
+        }, 20);
     }
 
     function restartSimulation(): void {
         //show setings container again
         landingPage.style.display = "";
-        //stop animation
+        //stop animation and reset values to default
         animation = false;
+        minimumSpeed = 1;
+        maximumSpeed = 5;
+        minimumPrecision = 1;
+        maximumPrecision = 5;
+        teamAColor = "66b2ff";
+        teamBColor = "ff3333";
     }
 
     function pauseSimulation(): void {
@@ -165,20 +172,26 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             const player: Player = new Player(position, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
             // bekommen noch Geschwindigkeit und Präzision
 
-            //Feldspieler in moveables, alle Spieler in allPlayers
+            //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
             allPlayers.push(player);
             if (jerseyNumber <= 22) {
                 moveables.push(player);
+            } else if (jerseyNumber > 22) {
+                sparePlayers.push(player);
             }
         }
 
         //Schiedsrichter und zwei Linienmänner werden kreiert:
         const referee: Referee = new Referee(new Vector(20, 20 + 800));
-        const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 10));
-        const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 10));
+        const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 15));
+        const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 15));
 
         //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);
+    }
+
+    function moveBall(_event: MouseEvent): void {
+        //get the position of the click and move the ball to this position
     }
 
     function update(): void {
@@ -188,6 +201,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         for (let moveable of moveables) {
             moveable.move();
             moveable.draw();
+        }
+        for (let sparePlayer of sparePlayers) {
+            sparePlayer.draw();
         }
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");

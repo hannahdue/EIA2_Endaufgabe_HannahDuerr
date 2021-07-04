@@ -14,8 +14,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         draw() {
             //draw
             EIA2_Endaufgabe_HannahDuerr.crc2.save();
-            //bis neues canvas gemacht wird mal ausgleichen:
-            EIA2_Endaufgabe_HannahDuerr.crc2.translate(-90, -5);
             //draw player center
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);

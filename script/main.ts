@@ -16,6 +16,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let goalsB: number = 0;
     let field: Playingfield;
     let animation: boolean = false;
+    let animationInterval: number;
     export let ball: Ball;
 
     interface PlayerInformation {
@@ -86,7 +87,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
-        canvas.addEventListener("click", moveBall);
+        canvas.addEventListener("click", shootBall);
 
         //install change-listener to all fieldset elements to get the data from the user preferences
         let fieldsets: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll("fieldset");
@@ -104,33 +105,25 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //hide settings container
         landingPage.style.display = "none";
 
-        console.log(minimumSpeed, maximumSpeed, minimumPrecision, maximumPrecision, teamAColor, teamBColor);
-
         //create the background and the ball
         field = new Playingfield();
         ball = new Ball(new Vector(500, 275));
         moveables.push(ball);
+
         //create people
         createPeopleOnField();
+
         //start animation
         animation = true;
-        window.setInterval(function (): void {
+        animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 update();
-        }, 20);
+        },                                     20);
     }
 
     function restartSimulation(): void {
-        //show setings container again
-        landingPage.style.display = "";
-        //stop animation and reset values to default
-        animation = false;
-        minimumSpeed = 1;
-        maximumSpeed = 5;
-        minimumPrecision = 1;
-        maximumPrecision = 5;
-        teamAColor = "66b2ff";
-        teamBColor = "ff3333";
+        //extra function in case we need the initialisation somewhere else
+        initialisation();
     }
 
     function pauseSimulation(): void {
@@ -190,8 +183,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         moveables.push(referee, linesmanTop, linesmanBottom);
     }
 
-    function moveBall(_event: MouseEvent): void {
+    function shootBall(_event: MouseEvent): void {
         //get the position of the click and move the ball to this position
+        //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
     }
 
     function update(): void {
@@ -208,6 +202,29 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");
         scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?"; //add jerseyNumber of player in possesion of the ball 
+    }
+
+    function initialisation(): void {
+        //show setings container again
+        landingPage.style.display = "";
+
+        //stop animation and reset values to default
+        animation = false;
+        minimumSpeed = 1;
+        maximumSpeed = 5;
+        minimumPrecision = 1;
+        maximumPrecision = 5;
+        teamAColor = "66b2ff";
+        teamBColor = "ff3333";
+
+        //empty arrays of current objects in the simulation
+        moveables = [];
+        allPlayers = [];
+        sparePlayers = [];
+
+        //animationsintervall beenden
+        window.clearInterval(animationInterval);
+
     }
 
 } //close namespace

@@ -10,12 +10,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         jerseyNumber: number;
 
 
-        constructor(_team: string, _color: string, _speed: number, _precision: number) {
-            super();
+        constructor(_position: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
+            super(_position);
             this.team = _team;
             this.color = _color;
             this.speed = _speed;
             this.precision = _precision;
+            this.jerseyNumber = _jerseyNumber;
         }
 
         draw(): void {

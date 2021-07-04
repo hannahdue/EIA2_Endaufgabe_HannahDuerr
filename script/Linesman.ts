@@ -3,8 +3,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         
         public radius: number;
 
-        constructor() {
-            super();
+        constructor(_position: Vector) {
+            super(_position);
         }
 
         draw(): void {

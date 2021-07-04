@@ -2,8 +2,14 @@
 var EIA2_Endaufgabe_HannahDuerr;
 (function (EIA2_Endaufgabe_HannahDuerr) {
     class Moveable {
-        constructor() {
-            //new
+        constructor(_position) {
+            this.position = _position;
+        }
+        move() {
+            //move
+        }
+        draw() {
+            //draw
         }
     }
     EIA2_Endaufgabe_HannahDuerr.Moveable = Moveable;

@@ -2,8 +2,8 @@
 var EIA2_Endaufgabe_HannahDuerr;
 (function (EIA2_Endaufgabe_HannahDuerr) {
     class Referee extends EIA2_Endaufgabe_HannahDuerr.Moveable {
-        constructor() {
-            super();
+        constructor(_position) {
+            super(_position);
         }
         draw() {
             //draw

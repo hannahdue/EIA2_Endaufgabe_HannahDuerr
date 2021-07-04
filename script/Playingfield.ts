@@ -31,6 +31,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             //Außenlinie
             crc2.lineWidth = 2;
             crc2.strokeStyle = "#FFF";
+            crc2.beginPath();
             crc2.rect(0, 0, crc2.canvas.width - 20, crc2.canvas.height - 20);
             crc2.stroke();
             crc2.closePath();

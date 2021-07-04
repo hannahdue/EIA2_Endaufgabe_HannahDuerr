@@ -11,11 +11,11 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.save();
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+            EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "white";
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
         }
         move() {

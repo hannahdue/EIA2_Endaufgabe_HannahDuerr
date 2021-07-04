@@ -26,6 +26,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             //Außenlinie
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "#FFF";
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.rect(0, 0, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width - 20, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 20);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();

@@ -79,8 +79,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         //create the background and the ball
         field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
         field.draw();
-        let ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
-        moveables.push(ball);
+        EIA2_Endaufgabe_HannahDuerr.ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
+        moveables.push(EIA2_Endaufgabe_HannahDuerr.ball);
     }
     function randomBetween(_min, _max) {
         return _min + Math.random() * (_max - _min);
@@ -146,8 +146,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
         //Schiedsrichter und zwei Linienmänner werden kreiert:
         const referee = new EIA2_Endaufgabe_HannahDuerr.Referee(new EIA2_Endaufgabe_HannahDuerr.Vector(20, 20 + 800));
-        const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(20, 20 + 800 / 2));
-        const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(20 + 800 / 2, 20 + 800));
+        const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, 10));
+        const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 10));
         //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);
     }

@@ -16,6 +16,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let goalsB: number = 0;
     let field: Playingfield;
     let animation: boolean = false;
+    export let ball: Ball;
 
     interface PlayerInformation {
         x: number;
@@ -95,7 +96,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //create the background and the ball
         field = new Playingfield();
         field.draw();
-        let ball: Ball = new Ball(new Vector(500, 275));
+        ball = new Ball(new Vector(500, 275));
         moveables.push(ball);
     }
 
@@ -173,8 +174,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //Schiedsrichter und zwei Linienmänner werden kreiert:
         const referee: Referee = new Referee(new Vector(20, 20 + 800));
-        const linesmanTop: Linesman = new Linesman(new Vector(20, 20 + 800 / 2));
-        const linesmanBottom: Linesman = new Linesman(new Vector(20 + 800 / 2, 20 + 800));
+        const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 10));
+        const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 10));
 
         //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);

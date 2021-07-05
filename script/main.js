@@ -156,11 +156,19 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     function shootBall(_event) {
         //get the position of the click and move the ball to this position
-        // Mouseposition:
-        let xpos = _event.offsetX;
-        let ypos = _event.offsetY;
-        //position dem ball als ziel mitgeben:
-        EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
+        //Mouseposition:
+        let xpos = 0;
+        let ypos = 0;
+        if (_event.offsetX > 75 && _event.offsetX < 925) {
+            xpos = _event.offsetX;
+        }
+        if (_event.offsetY > 0 && _event.offsetY < 550) {
+            ypos = _event.offsetY;
+        }
+        //wenn position gesetzt wurde, dem ball als ziel mitgeben:
+        if (xpos > 0 && ypos > 0) {
+            EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
+        }
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
         // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
         // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);

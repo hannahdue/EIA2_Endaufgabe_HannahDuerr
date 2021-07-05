@@ -77,7 +77,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         let fieldsets = document.querySelectorAll("fieldset");
         for (let i = 0; i < fieldsets.length; i++) {
             let fieldset = fieldsets[i];
-            fieldset.addEventListener("change", handleChange);
+            fieldset.addEventListener("change", getUserPreferences);
         }
     }
     function randomBetween(_min, _max) {
@@ -87,6 +87,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     function startSimulation() {
         //hide settings container
         landingPage.style.display = "none";
+        getUserPreferences();
         //create the background and the ball
         field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
         EIA2_Endaufgabe_HannahDuerr.ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
@@ -112,7 +113,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             animation = true;
         }
     }
-    function handleChange() {
+    function getUserPreferences() {
         let formData = new FormData(document.forms[0]);
         minimumSpeed = Number(formData.get("MinimumSpeedSlider"));
         maximumSpeed = Number(formData.get("MaximumSpeedSlider"));

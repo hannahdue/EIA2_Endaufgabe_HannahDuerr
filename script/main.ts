@@ -93,7 +93,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         let fieldsets: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll("fieldset");
         for (let i: number = 0; i < fieldsets.length; i++) {
             let fieldset: HTMLFieldSetElement = fieldsets[i];
-            fieldset.addEventListener("change", handleChange);
+            fieldset.addEventListener("change", getUserPreferences);
         }
     }
 
@@ -104,6 +104,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     function startSimulation(): void {
         //hide settings container
         landingPage.style.display = "none";
+
+        getUserPreferences();
 
         //create the background and the ball
         field = new Playingfield();
@@ -134,7 +136,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
     }
 
-    function handleChange(): void {
+    function getUserPreferences(): void {
         let formData: FormData = new FormData(document.forms[0]);
 
         minimumSpeed = Number(formData.get("MinimumSpeedSlider"));

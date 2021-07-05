@@ -195,6 +195,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
             ball.destination = new Vector(xpos, ypos);
+            ball.startMoving = true;
         }
 
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler

@@ -2,7 +2,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     export class Ball extends Moveable {
 
         public radius: number = 10;
-        destination: Vector; //position of the click where the ball will roll to
+        public destination: Vector; //position of the click where the ball will roll to
+        public startMoving: boolean = false;
 
         constructor(_position: Vector) {
             super(_position);
@@ -118,13 +119,21 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         move(): void {
-
+            //wenn eine destination gesetzt wurde, ball dorthin bewegen
             if (this.destination) {
                 let direction: Vector = new Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
-            
+                
+                //je weiter destination vom Ball weg ist, desto ungenauer ist der Schuss
+                if (this.startMoving == true) {
+                    let distance: number = (Math.random() - 0.5) * (0.15 * direction.length);
+                    this.destination.x += distance;
+                    this.destination.x += distance;
+                    this.startMoving = false;
+                }
+
                 direction.scale(1 / 50);
                 this.position.add(direction);
-    
+
                 this.draw();
             }
         }

@@ -164,6 +164,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
+            EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
         }
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
         // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);

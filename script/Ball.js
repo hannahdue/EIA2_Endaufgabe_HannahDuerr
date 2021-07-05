@@ -5,6 +5,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         constructor(_position) {
             super(_position);
             this.radius = 10;
+            this.startMoving = false;
         }
         draw() {
             EIA2_Endaufgabe_HannahDuerr.crc2.save();
@@ -100,8 +101,16 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
         }
         move() {
+            //wenn eine destination gesetzt wurde, ball dorthin bewegen
             if (this.destination) {
                 let direction = new EIA2_Endaufgabe_HannahDuerr.Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
+                //je weiter destination vom Ball weg ist, desto ungenauer ist der Schuss
+                if (this.startMoving == true) {
+                    let distance = (Math.random() - 0.5) * (0.15 * direction.length);
+                    this.destination.x += distance;
+                    this.destination.x += distance;
+                    this.startMoving = false;
+                }
                 direction.scale(1 / 50);
                 this.position.add(direction);
                 this.draw();

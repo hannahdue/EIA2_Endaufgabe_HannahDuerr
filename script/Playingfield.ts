@@ -2,8 +2,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     export class Playingfield {
 
         draw(): void {
-            console.log("Playingfield drawn.");
-
             //mark the area of the canvas
             crc2.beginPath();
             crc2.fillStyle = "silver";

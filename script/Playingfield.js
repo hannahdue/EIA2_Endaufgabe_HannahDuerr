@@ -3,7 +3,6 @@ var EIA2_Endaufgabe_HannahDuerr;
 (function (EIA2_Endaufgabe_HannahDuerr) {
     class Playingfield {
         draw() {
-            console.log("Playingfield drawn.");
             //mark the area of the canvas
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "silver";

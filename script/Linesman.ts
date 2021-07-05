@@ -17,9 +17,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.closePath();
             crc2.fillStyle = "#FFFF00";
             crc2.fill();
-            crc2.lineWidth = 1;
-            crc2.strokeStyle = "black";
-            crc2.stroke();
+            
 
             crc2.restore();
         }

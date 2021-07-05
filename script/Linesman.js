@@ -15,9 +15,6 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "#FFFF00";
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
-            EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
-            EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
-            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
         }
         move() {

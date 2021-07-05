@@ -170,12 +170,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         //Schiedsrichter und zwei Linienmänner werden kreiert:
-        const referee: Referee = new Referee(new Vector(crc2.canvas.width / 2, crc2.canvas.height / 2));
+        const referee: Referee = new Referee(new Vector(510, 310));
         const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 15));
         const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 15));
 
         //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);
+        console.log(moveables);
     }
 
     function shootBall(_event: MouseEvent): void {

@@ -106,20 +106,8 @@ var EIA2_Endaufgabe_HannahDuerr;
                 this.position.add(direction);
                 this.draw();
             }
-            //old move method
-            /*this.position.x += 4;
-            this.position.y += 2;
-
-            if (this.position.x < 0)
-                this.position.x += crc2.canvas.width;
-            if (this.position.y < 0)
-                this.position.y += crc2.canvas.height;
-            if (this.position.x > crc2.canvas.width)
-                this.position.x -= crc2.canvas.width;
-            if (this.position.y > crc2.canvas.height)
-                this.position.y -= crc2.canvas.height;*/
         }
-    }
+    } //class close
     EIA2_Endaufgabe_HannahDuerr.Ball = Ball;
-})(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {}));
+})(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {})); //namespace close
 //# sourceMappingURL=Ball.js.map

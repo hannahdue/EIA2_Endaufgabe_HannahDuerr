@@ -9,7 +9,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         precision: number;
         jerseyNumber: number;
 
-
         constructor(_position: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
             super(_position);
             this.team = _team;

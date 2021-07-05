@@ -23,6 +23,10 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            EIA2_Endaufgabe_HannahDuerr.crc2.textBaseline = "middle";
+            EIA2_Endaufgabe_HannahDuerr.crc2.textAlign = "center";
+            EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
+            EIA2_Endaufgabe_HannahDuerr.crc2.fillText(this.jerseyNumber.toString(), this.position.x, this.position.y);
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
         }
         move() {

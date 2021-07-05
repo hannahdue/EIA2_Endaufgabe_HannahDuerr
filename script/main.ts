@@ -175,7 +175,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         //Schiedsrichter und zwei Linienmänner werden kreiert:
-        const referee: Referee = new Referee(new Vector(20, 20 + 800));
+        const referee: Referee = new Referee(new Vector(crc2.canvas.width / 2, crc2.canvas.height / 2));
         const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 15));
         const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 15));
 
@@ -185,6 +185,17 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     function shootBall(_event: MouseEvent): void {
         //get the position of the click and move the ball to this position
+        // Mouseposition:
+        let xpos: number = _event.offsetX;
+        let ypos: number = _event.offsetY;
+
+        //position dem ball als ziel mitgeben:
+        ball.destination = new Vector(xpos, ypos);
+
+        // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
+        // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
+        // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
+       
         //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
     }
 

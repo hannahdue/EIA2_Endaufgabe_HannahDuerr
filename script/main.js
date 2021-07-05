@@ -148,7 +148,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             }
         }
         //Schiedsrichter und zwei Linienmänner werden kreiert:
-        const referee = new EIA2_Endaufgabe_HannahDuerr.Referee(new EIA2_Endaufgabe_HannahDuerr.Vector(20, 20 + 800));
+        const referee = new EIA2_Endaufgabe_HannahDuerr.Referee(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height / 2));
         const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, 15));
         const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 15));
         //alle in moveables pushen
@@ -156,6 +156,14 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     function shootBall(_event) {
         //get the position of the click and move the ball to this position
+        // Mouseposition:
+        let xpos = _event.offsetX;
+        let ypos = _event.offsetY;
+        //position dem ball als ziel mitgeben:
+        EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
+        // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
+        // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
+        // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
         //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
     }
     function update() {

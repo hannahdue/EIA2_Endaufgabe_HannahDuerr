@@ -73,12 +73,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
-        //install change-listener to all fieldset elements to get the data from the user preferences
-        let fieldsets = document.querySelectorAll("fieldset");
-        for (let i = 0; i < fieldsets.length; i++) {
-            let fieldset = fieldsets[i];
-            fieldset.addEventListener("change", getUserPreferences);
-        }
     }
     function randomBetween(_min, _max) {
         return _min + Math.random() * (_max - _min);

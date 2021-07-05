@@ -88,13 +88,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
-
-        //install change-listener to all fieldset elements to get the data from the user preferences
-        let fieldsets: NodeListOf<HTMLFieldSetElement> = document.querySelectorAll("fieldset");
-        for (let i: number = 0; i < fieldsets.length; i++) {
-            let fieldset: HTMLFieldSetElement = fieldsets[i];
-            fieldset.addEventListener("change", getUserPreferences);
-        }
     }
 
     export function randomBetween(_min: number, _max: number): number {

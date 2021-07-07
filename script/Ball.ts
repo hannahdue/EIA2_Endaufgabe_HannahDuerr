@@ -4,6 +4,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         public radius: number = 10;
         public destination: Vector; //position of the click where the ball will roll to
         public startMoving: boolean = false;
+        private hitGoalA: boolean = false;
+        private hitGoalB: boolean = false;
 
         constructor(_position: Vector) {
             super(_position);
@@ -122,7 +124,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             //wenn eine destination gesetzt wurde, ball dorthin bewegen
             if (this.destination) {
                 let direction: Vector = new Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
-                
+
                 //je weiter destination vom Ball weg ist, desto ungenauer ist der Schuss
                 if (this.startMoving == true) {
                     let distance: number = (Math.random() - 0.5) * (0.15 * direction.length);
@@ -134,20 +136,33 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 direction.scale(1 / 50);
                 this.position.add(direction);
 
-                //if ball hits left goal, dispatch an event which counts up the goals of team B in main
-                if (this.position.x == 100 && this.position.y > 225 && this.position.y < 275) {
-                    //create custom event and dispatch it 
-                    console.log("Goal for team B");
-                    let event: CustomEvent = new CustomEvent(SOCCER_EVENT.LEFTGOAL_HIT);
-                    crc2.canvas.dispatchEvent(event);
-                }
-                //if ball hits right goal, dispatch an event which counts up the goals of team A in main
-                if (this.position.x == 900 && this.position.y > 225 && this.position.y < 275) {
-                    //create custom event and dispatch it 
-                    console.log("Goal for team A");
-                    let event: CustomEvent = new CustomEvent(SOCCER_EVENT.RIGHTGOAL_HIT);
-                    crc2.canvas.dispatchEvent(event);
-                }
+                this.checkGoals();
+            }
+        }
+
+        checkGoals(): void {
+            //check, if ball hit goals:
+            if (this.position.x < 100 && this.position.y > 225 && this.position.y < 275) {
+                this.hitGoalA = true;
+            }
+            if (this.position.x > 900 && this.position.y > 225 && this.position.y < 275) {
+                this.hitGoalB = true;
+            }
+
+            //if ball hit a goal, dispatch an event which counts up the goals of team A or B in main
+            if (this.hitGoalA == true) {
+                //create custom event and dispatch it 
+                console.log("Goal for team B");
+                let event: CustomEvent = new CustomEvent(SOCCER_EVENT.LEFTGOAL_HIT);
+                crc2.canvas.dispatchEvent(event);
+                this.hitGoalA = false;
+            }
+            if (this.hitGoalB == true) {
+                //create custom event and dispatch it 
+                console.log("Goal for team A");
+                let event: CustomEvent = new CustomEvent(SOCCER_EVENT.RIGHTGOAL_HIT);
+                crc2.canvas.dispatchEvent(event);
+                this.hitGoalB = false;
             }
         }
     } //class close

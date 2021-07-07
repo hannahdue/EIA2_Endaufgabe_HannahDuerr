@@ -93,8 +93,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
-        canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
-        canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
+        crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
+        crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
 
     export function randomBetween(_min: number, _max: number): number {
@@ -122,7 +122,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 update();
         },                                     20);
 
-        console.log("Simaulation started.");
+        console.log("Simulation started.");
     }
 
     function restartSimulation(): void {

@@ -6,6 +6,8 @@ var EIA2_Endaufgabe_HannahDuerr;
             super(_position);
             this.radius = 10;
             this.startMoving = false;
+            this.hitGoalA = false;
+            this.hitGoalB = false;
         }
         draw() {
             EIA2_Endaufgabe_HannahDuerr.crc2.save();
@@ -113,20 +115,31 @@ var EIA2_Endaufgabe_HannahDuerr;
                 }
                 direction.scale(1 / 50);
                 this.position.add(direction);
-                //if ball hits left goal, dispatch an event which counts up the goals of team B in main
-                if (this.position.x == 100 && this.position.y > 225 && this.position.y < 275) {
-                    //create custom event and dispatch it 
-                    console.log("Goal for team B");
-                    let event = new CustomEvent(EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT.LEFTGOAL_HIT);
-                    EIA2_Endaufgabe_HannahDuerr.crc2.canvas.dispatchEvent(event);
-                }
-                //if ball hits right goal, dispatch an event which counts up the goals of team A in main
-                if (this.position.x == 900 && this.position.y > 225 && this.position.y < 275) {
-                    //create custom event and dispatch it 
-                    console.log("Goal for team A");
-                    let event = new CustomEvent(EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT.RIGHTGOAL_HIT);
-                    EIA2_Endaufgabe_HannahDuerr.crc2.canvas.dispatchEvent(event);
-                }
+                this.checkGoals();
+            }
+        }
+        checkGoals() {
+            //check, if ball hit goals:
+            if (this.position.x < 100 && this.position.y > 225 && this.position.y < 275) {
+                this.hitGoalA = true;
+            }
+            if (this.position.x > 900 && this.position.y > 225 && this.position.y < 275) {
+                this.hitGoalB = true;
+            }
+            //if ball hit a goal, dispatch an event which counts up the goals of team A or B in main
+            if (this.hitGoalA == true) {
+                //create custom event and dispatch it 
+                console.log("Goal for team B");
+                let event = new CustomEvent(EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT.LEFTGOAL_HIT);
+                EIA2_Endaufgabe_HannahDuerr.crc2.canvas.dispatchEvent(event);
+                this.hitGoalA = false;
+            }
+            if (this.hitGoalB == true) {
+                //create custom event and dispatch it 
+                console.log("Goal for team A");
+                let event = new CustomEvent(EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT.RIGHTGOAL_HIT);
+                EIA2_Endaufgabe_HannahDuerr.crc2.canvas.dispatchEvent(event);
+                this.hitGoalB = false;
             }
         }
     } //class close

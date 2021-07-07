@@ -78,8 +78,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
-        canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
-        canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
+        EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
+        EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
     function randomBetween(_min, _max) {
         return _min + Math.random() * (_max - _min);
@@ -101,7 +101,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             if (animation == true)
                 update();
         }, 20);
-        console.log("Simaulation started.");
+        console.log("Simulation started.");
     }
     function restartSimulation() {
         //extra function in case we need the initialisation somewhere else

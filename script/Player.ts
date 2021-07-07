@@ -8,6 +8,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         speed: number;
         precision: number;
         jerseyNumber: number;
+        startPosition: Vector;
+        perceptionRadius: number = 160;
 
         constructor(_position: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
             super(_position);
@@ -16,6 +18,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             this.speed = _speed;
             this.precision = _precision;
             this.jerseyNumber = _jerseyNumber;
+            this.startPosition = _position;
         }
 
         draw(): void {
@@ -43,8 +46,21 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         move(): void {
             //move
             //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
-            //move towards ball 
-            //if difference between ball and player is smaller than 10 (or so)
+            
+            //1. Distanz zum Ball ausrechnen
+            let vectorToBall: Vector = new Vector(this.position.x - ball.position.x, this.position.y - ball.position.y); //differenzvektor
+            let distanceToBall: number = vectorToBall.length; //länge des differenzvektors
+
+            //2. Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Spielers
+            if (distanceToBall < this.perceptionRadius) {
+                //move towards ball
+                //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
+                //speed / direction.length = skalierungsfaktor
+
+            }
+            
+            
+            //if difference between ball and player is smaller than 25, animation = false
         }
     }
 }

@@ -158,6 +158,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
     }
     function shootBall(_event) {
+        //to be able to check goals, set hitGoalA & hitGoalsB from ball to true
+        EIA2_Endaufgabe_HannahDuerr.ball.hitGoalA = false;
+        EIA2_Endaufgabe_HannahDuerr.ball.hitGoalB = false;
         //get the position of the click and move the ball to this position
         //Mouseposition:
         let xpos = 0;

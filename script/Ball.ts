@@ -4,8 +4,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         public radius: number = 10;
         public destination: Vector; //position of the click where the ball will roll to
         public startMoving: boolean = false;
-        private hitGoalA: boolean = false;
-        private hitGoalB: boolean = false;
+        hitGoalA: boolean = false;
+        hitGoalB: boolean = false;
 
         constructor(_position: Vector) {
             super(_position);
@@ -142,27 +142,23 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         checkGoals(): void {
             //check, if ball hit goals:
-            if (this.position.x < 100 && this.position.y > 225 && this.position.y < 275) {
-                this.hitGoalA = true;
+            if (this.position.x < 100 && this.position.y > 250 && this.position.y < 300) {
+                if (this.hitGoalA == false) {
+                    //create custom event and dispatch it 
+                    console.log("Goal for team B");
+                    let event: CustomEvent = new CustomEvent(SOCCER_EVENT.LEFTGOAL_HIT);
+                    crc2.canvas.dispatchEvent(event);
+                    this.hitGoalA = true;
+                }
             }
-            if (this.position.x > 900 && this.position.y > 225 && this.position.y < 275) {
-                this.hitGoalB = true;
-            }
-
-            //if ball hit a goal, dispatch an event which counts up the goals of team A or B in main
-            if (this.hitGoalA == true) {
-                //create custom event and dispatch it 
-                console.log("Goal for team B");
-                let event: CustomEvent = new CustomEvent(SOCCER_EVENT.LEFTGOAL_HIT);
-                crc2.canvas.dispatchEvent(event);
-                this.hitGoalA = false;
-            }
-            if (this.hitGoalB == true) {
-                //create custom event and dispatch it 
-                console.log("Goal for team A");
-                let event: CustomEvent = new CustomEvent(SOCCER_EVENT.RIGHTGOAL_HIT);
-                crc2.canvas.dispatchEvent(event);
-                this.hitGoalB = false;
+            if (this.position.x > 900 && this.position.y > 250 && this.position.y < 300) {
+                if (this.hitGoalB == false) {
+                    //create custom event and dispatch it 
+                    console.log("Goal for team A");
+                    let event: CustomEvent = new CustomEvent(SOCCER_EVENT.RIGHTGOAL_HIT);
+                    crc2.canvas.dispatchEvent(event);
+                    this.hitGoalB = true;
+                }
             }
         }
     } //class close

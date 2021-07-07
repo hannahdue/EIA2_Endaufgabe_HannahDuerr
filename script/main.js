@@ -16,6 +16,11 @@ var EIA2_Endaufgabe_HannahDuerr;
     let field;
     let animation = false;
     let animationInterval;
+    let SOCCER_EVENT;
+    (function (SOCCER_EVENT) {
+        SOCCER_EVENT["RIGHTGOAL_HIT"] = "rightGoalHit";
+        SOCCER_EVENT["LEFTGOAL_HIT"] = "leftGoalHit";
+    })(SOCCER_EVENT = EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT || (EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT = {}));
     let playerInformation = [
         // Team A
         { x: 125, y: 275, team: "A" },
@@ -73,6 +78,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
+        canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
+        canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
     function randomBetween(_min, _max) {
         return _min + Math.random() * (_max - _min);
@@ -94,6 +101,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             if (animation == true)
                 update();
         }, 20);
+        console.log("Simaulation started.");
     }
     function restartSimulation() {
         //extra function in case we need the initialisation somewhere else
@@ -117,6 +125,12 @@ var EIA2_Endaufgabe_HannahDuerr;
         teamBColor = formData.get("TeamBColorPicker");
     }
     function createPeopleOnField() {
+        //Schiedsrichter und zwei Linienmänner werden kreiert:
+        const referee = new EIA2_Endaufgabe_HannahDuerr.Referee(new EIA2_Endaufgabe_HannahDuerr.Vector(510, 310));
+        const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, 15));
+        const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 15));
+        //alle in moveables pushen
+        moveables.push(referee, linesmanTop, linesmanBottom);
         // Spieler:
         for (let i = 0; i < 32; i++) {
             let position = new EIA2_Endaufgabe_HannahDuerr.Vector(playerInformation[i].x, playerInformation[i].y);
@@ -142,13 +156,6 @@ var EIA2_Endaufgabe_HannahDuerr;
                 sparePlayers.push(player);
             }
         }
-        //Schiedsrichter und zwei Linienmänner werden kreiert:
-        const referee = new EIA2_Endaufgabe_HannahDuerr.Referee(new EIA2_Endaufgabe_HannahDuerr.Vector(510, 310));
-        const linesmanTop = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, 15));
-        const linesmanBottom = new EIA2_Endaufgabe_HannahDuerr.Linesman(new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width / 2, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height - 15));
-        //alle in moveables pushen
-        moveables.push(referee, linesmanTop, linesmanBottom);
-        console.log(moveables);
     }
     function shootBall(_event) {
         //get the position of the click and move the ball to this position
@@ -165,11 +172,18 @@ var EIA2_Endaufgabe_HannahDuerr;
         if (xpos > 0 && ypos > 0) {
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
+            animation = true;
         }
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
         // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
         // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
         //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
+    }
+    function handleLeftGoal() {
+        goalsB++;
+    }
+    function handleRightGoal() {
+        goalsA++;
     }
     function update() {
         //draw the background

@@ -42,6 +42,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         move(): void {
             //move
+            //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
+            //move towards ball 
+            //if difference between ball and player is smaller than 10 (or so)
         }
     }
 }

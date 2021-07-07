@@ -127,14 +127,27 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 if (this.startMoving == true) {
                     let distance: number = (Math.random() - 0.5) * (0.15 * direction.length);
                     this.destination.x += distance;
-                    this.destination.x += distance;
+                    this.destination.y += distance;
                     this.startMoving = false;
                 }
 
                 direction.scale(1 / 50);
                 this.position.add(direction);
 
-                this.draw();
+                //if ball hits left goal, dispatch an event which counts up the goals of team B in main
+                if (this.position.x == 100 && this.position.y > 225 && this.position.y < 275) {
+                    //create custom event and dispatch it 
+                    console.log("Goal for team B");
+                    let event: CustomEvent = new CustomEvent(SOCCER_EVENT.LEFTGOAL_HIT);
+                    crc2.canvas.dispatchEvent(event);
+                }
+                //if ball hits right goal, dispatch an event which counts up the goals of team A in main
+                if (this.position.x == 900 && this.position.y > 225 && this.position.y < 275) {
+                    //create custom event and dispatch it 
+                    console.log("Goal for team A");
+                    let event: CustomEvent = new CustomEvent(SOCCER_EVENT.RIGHTGOAL_HIT);
+                    crc2.canvas.dispatchEvent(event);
+                }
             }
         }
     } //class close

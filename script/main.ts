@@ -19,6 +19,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let animationInterval: number;
     export let ball: Ball;
 
+    export enum SOCCER_EVENT {
+        RIGHTGOAL_HIT = "rightGoalHit",
+        LEFTGOAL_HIT = "leftGoalHit"
+    }
+
     interface PlayerInformation {
         x: number;
         y: number;
@@ -88,6 +93,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
+        canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
+        canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
 
     export function randomBetween(_min: number, _max: number): number {
@@ -114,6 +121,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             if (animation == true)
                 update();
         },                                     20);
+
+        console.log("Simaulation started.");
     }
 
     function restartSimulation(): void {
@@ -142,6 +151,14 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function createPeopleOnField(): void {
+        //Schiedsrichter und zwei Linienmänner werden kreiert:
+        const referee: Referee = new Referee(new Vector(510, 310));
+        const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 15));
+        const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 15));
+
+        //alle in moveables pushen
+        moveables.push(referee, linesmanTop, linesmanBottom);
+        
         // Spieler:
         for (let i: number = 0; i < 32; i++) {
 
@@ -168,15 +185,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 sparePlayers.push(player);
             }
         }
-
-        //Schiedsrichter und zwei Linienmänner werden kreiert:
-        const referee: Referee = new Referee(new Vector(510, 310));
-        const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 15));
-        const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 15));
-
-        //alle in moveables pushen
-        moveables.push(referee, linesmanTop, linesmanBottom);
-        console.log(moveables);
     }
 
     function shootBall(_event: MouseEvent): void {
@@ -196,6 +204,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         if (xpos > 0 && ypos > 0) {
             ball.destination = new Vector(xpos, ypos);
             ball.startMoving = true;
+            animation = true;
         }
 
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
@@ -203,6 +212,14 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
        
         //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
+    }
+
+    function handleLeftGoal(): void {
+        goalsB ++;
+    }
+
+    function handleRightGoal(): void {
+        goalsA ++;
     }
 
     function update(): void {

@@ -15,7 +15,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let goalsA: number = 0;
     let goalsB: number = 0;
     let field: Playingfield;
-    let animation: boolean = false;
+    export let animation: boolean = false;
     let animationInterval: number;
     export let ball: Ball;
 
@@ -31,9 +31,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
     let playerInformation: PlayerInformation[] = [
         // Team A
-        { x: 125, y: 275, team: "A" },
-        { x: 200, y: 150, team: "A" },
-        { x: 200, y: 400, team: "A" },
+        { x: 135, y: 275, team: "A" }, //weiter ins feld
+        { x: 180, y: 100, team: "A" }, //hochbewegt
+        { x: 180, y: 450, team: "A" }, //runter bewegt
         { x: 300, y: 75, team: "A" },
         { x: 300, y: 225, team: "A" },
         { x: 300, y: 325, team: "A" },
@@ -52,9 +52,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         { x: 700, y: 225, team: "B" },
         { x: 700, y: 325, team: "B" },
         { x: 700, y: 475, team: "B" },
-        { x: 800, y: 150, team: "B" },
-        { x: 800, y: 400, team: "B" },
-        { x: 875, y: 275, team: "B" },
+        { x: 820, y: 100, team: "B" }, //bewegt
+        { x: 820, y: 450, team: "B" }, //bewegt
+        { x: 865, y: 275, team: "B" }, //Weiter ins feld
 
         // Auswechselspieler Team A
         { x: 25, y: 125, team: "A" },
@@ -188,6 +188,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function shootBall(_event: MouseEvent): void {
+       
         //to be able to check goals, set hitGoalA & hitGoalsB from ball to true
         ball.hitGoalA = false;
         ball.hitGoalB = false;

@@ -14,7 +14,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     let goalsA = 0;
     let goalsB = 0;
     let field;
-    let animation = false;
+    EIA2_Endaufgabe_HannahDuerr.animation = false;
     let animationInterval;
     let SOCCER_EVENT;
     (function (SOCCER_EVENT) {
@@ -23,9 +23,9 @@ var EIA2_Endaufgabe_HannahDuerr;
     })(SOCCER_EVENT = EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT || (EIA2_Endaufgabe_HannahDuerr.SOCCER_EVENT = {}));
     let playerInformation = [
         // Team A
-        { x: 125, y: 275, team: "A" },
-        { x: 200, y: 150, team: "A" },
-        { x: 200, y: 400, team: "A" },
+        { x: 135, y: 275, team: "A" },
+        { x: 180, y: 100, team: "A" },
+        { x: 180, y: 450, team: "A" },
         { x: 300, y: 75, team: "A" },
         { x: 300, y: 225, team: "A" },
         { x: 300, y: 325, team: "A" },
@@ -43,9 +43,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         { x: 700, y: 225, team: "B" },
         { x: 700, y: 325, team: "B" },
         { x: 700, y: 475, team: "B" },
-        { x: 800, y: 150, team: "B" },
-        { x: 800, y: 400, team: "B" },
-        { x: 875, y: 275, team: "B" },
+        { x: 820, y: 100, team: "B" },
+        { x: 820, y: 450, team: "B" },
+        { x: 865, y: 275, team: "B" },
         // Auswechselspieler Team A
         { x: 25, y: 125, team: "A" },
         { x: 25, y: 200, team: "A" },
@@ -96,9 +96,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         //create people
         createPeopleOnField();
         //start animation
-        animation = true;
+        EIA2_Endaufgabe_HannahDuerr.animation = true;
         animationInterval = window.setInterval(function () {
-            if (animation == true)
+            if (EIA2_Endaufgabe_HannahDuerr.animation == true)
                 update();
         }, 20);
         console.log("Simulation started.");
@@ -108,11 +108,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         initialisation();
     }
     function pauseSimulation() {
-        if (animation == true) {
-            animation = false;
+        if (EIA2_Endaufgabe_HannahDuerr.animation == true) {
+            EIA2_Endaufgabe_HannahDuerr.animation = false;
         }
         else {
-            animation = true;
+            EIA2_Endaufgabe_HannahDuerr.animation = true;
         }
     }
     function getUserPreferences() {
@@ -175,7 +175,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         if (xpos > 0 && ypos > 0) {
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
-            animation = true;
+            EIA2_Endaufgabe_HannahDuerr.animation = true;
         }
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
         // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
@@ -206,7 +206,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         //show setings container again
         landingPage.style.display = "";
         //stop animation and reset values to default
-        animation = false;
+        EIA2_Endaufgabe_HannahDuerr.animation = false;
         minimumSpeed = 1;
         maximumSpeed = 5;
         minimumPrecision = 1;

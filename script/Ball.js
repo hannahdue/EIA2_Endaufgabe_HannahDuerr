@@ -10,8 +10,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             this.hitGoalB = false;
         }
         draw() {
-            EIA2_Endaufgabe_HannahDuerr.crc2.save();
-            // draw player center
+            // draw ball center
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "white";
@@ -100,7 +99,6 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            EIA2_Endaufgabe_HannahDuerr.crc2.restore();
         }
         move() {
             //wenn eine destination gesetzt wurde, ball dorthin bewegen

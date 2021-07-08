@@ -11,10 +11,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             super(_position);
         }
 
-        draw(): void {
-            crc2.save();
-
-            // draw player center
+        public draw(): void {
+            // draw ball center
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
             crc2.fillStyle = "white";
@@ -115,12 +113,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.lineWidth = 1;
             crc2.strokeStyle = "black";
             crc2.stroke();
-
-
-            crc2.restore();
         }
 
-        move(): void {
+        public move(): void {
             //wenn eine destination gesetzt wurde, ball dorthin bewegen
             if (this.destination) {
                 let direction: Vector = new Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
@@ -140,7 +135,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             }
         }
 
-        checkGoals(): void {
+        private checkGoals(): void {
             //check, if ball hit goals:
             if (this.position.x < 100 && this.position.y > 250 && this.position.y < 300) {
                 if (this.hitGoalA == false) {

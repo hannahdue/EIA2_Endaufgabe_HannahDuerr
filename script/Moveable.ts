@@ -1,5 +1,5 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
-    export class Moveable {
+    export abstract class Moveable {
         
         public position: Vector;
         public radius: number;
@@ -10,13 +10,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             this.position = _position;
         }
 
-        move(): void {
-            //move
-        }
+        abstract move(): void;
 
-        draw(): void {
-            //draw
-        }
+        abstract draw(): void;
         
     }
 }

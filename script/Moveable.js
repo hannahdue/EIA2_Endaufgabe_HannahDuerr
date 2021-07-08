@@ -5,12 +5,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         constructor(_position) {
             this.position = _position;
         }
-        move() {
-            //move
-        }
-        draw() {
-            //draw
-        }
     }
     EIA2_Endaufgabe_HannahDuerr.Moveable = Moveable;
 })(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {}));

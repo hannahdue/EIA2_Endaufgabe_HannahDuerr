@@ -9,7 +9,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         precision: number;
         jerseyNumber: number;
         startPosition: Vector;
-        perceptionRadius: number = 160;
+        perceptionRadius: number = 100;
 
         constructor(_position: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
             super(_position);
@@ -22,9 +22,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         draw(): void {
-            //draw
-            crc2.save();
-
             //draw player center
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
@@ -40,27 +37,45 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.fillStyle = "black";
             crc2.fillText(this.jerseyNumber.toString(), this.position.x, this.position.y);
 
-            crc2.restore();
+            /*//Radius zum testen
+            crc2.beginPath();
+            crc2.arc(this.position.x, this.position.y, this.perceptionRadius, 0, 2 * Math.PI, false);
+            crc2.lineWidth = 1;
+            crc2.strokeStyle = "#6D6D6D";
+            crc2.stroke();*/
         }
 
         move(): void {
             //move
             //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
-            
+
             //1. Distanz zum Ball ausrechnen
-            let vectorToBall: Vector = new Vector(this.position.x - ball.position.x, this.position.y - ball.position.y); //differenzvektor
+            let vectorToBall: Vector = new Vector(ball.position.x - this.position.x, ball.position.y - this.position.y); //differenzvektor
             let distanceToBall: number = vectorToBall.length; //länge des differenzvektors
 
+            let vectorToStartposition: Vector = new Vector(this.startPosition.x - this.position.x, this.startPosition.y - this.position.y); //differenzvektor
+            let distanceToStartposition: number = vectorToStartposition.length; //länge des differenzvektors
+                
             //2. Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Spielers
             if (distanceToBall < this.perceptionRadius) {
                 //move towards ball
                 //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
-                //speed / direction.length = skalierungsfaktor
+                //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
+                let scale: number = 1 / distanceToBall;
+                vectorToBall.scale(scale);
+                this.position.add(vectorToBall);
 
+                //if difference between ball and player is smaller than 25, animation = false
+                //wenn spieler am Ball ankommt, stoppt animation
+                if (distanceToBall > 23 && distanceToBall < 26) {
+                    animation = false;
+                }
+            } else if (distanceToStartposition > 0) {
+                //spieler läuft zurück zu seiner startposition
+                let scale: number = 1 / distanceToStartposition;
+                vectorToStartposition.scale(scale);
+                this.position.add(vectorToStartposition);
             }
-            
-            
-            //if difference between ball and player is smaller than 25, animation = false
         }
     }
 }

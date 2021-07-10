@@ -185,19 +185,15 @@ var EIA2_Endaufgabe_HannahDuerr;
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
             //stop player at the ball from reacting to the ball he just shot away
-            EIA2_Endaufgabe_HannahDuerr.playerAtBall.active = false;
-            window.setTimeout(function () {
-                EIA2_Endaufgabe_HannahDuerr.playerAtBall.active = true;
-            }, 1500);
+            if (EIA2_Endaufgabe_HannahDuerr.playerAtBall) {
+                EIA2_Endaufgabe_HannahDuerr.playerAtBall.active = false;
+                EIA2_Endaufgabe_HannahDuerr.playerAtBall.toggleActivity();
+            }
             //move ball
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
             EIA2_Endaufgabe_HannahDuerr.animation = true;
         }
-        // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
-        // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
-        // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
-        //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
     }
     function handleLeftGoal() {
         goalsB++;
@@ -241,7 +237,12 @@ var EIA2_Endaufgabe_HannahDuerr;
             sparePlayer.draw();
         }
         let scoreDisplay = document.querySelector("div#score");
-        scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + EIA2_Endaufgabe_HannahDuerr.playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
+        if (EIA2_Endaufgabe_HannahDuerr.playerAtBall) {
+            scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + EIA2_Endaufgabe_HannahDuerr.playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
+        }
+        else {
+            scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?";
+        }
     }
     function initialisation() {
         //show setings container again

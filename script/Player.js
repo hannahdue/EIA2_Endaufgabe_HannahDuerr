@@ -28,12 +28,6 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.textAlign = "center";
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.fillText(this.jerseyNumber.toString(), this.position.x, this.position.y);
-            /*//Radius zum testen
-            crc2.beginPath();
-            crc2.arc(this.position.x, this.position.y, this.perceptionRadius, 0, 2 * Math.PI, false);
-            crc2.lineWidth = 1;
-            crc2.strokeStyle = "#6D6D6D";
-            crc2.stroke();*/
         }
         move() {
             //move
@@ -50,7 +44,7 @@ var EIA2_Endaufgabe_HannahDuerr;
                     //move towards ball
                     //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
                     //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
-                    let scale = 1 / distanceToBall;
+                    let scale = (1 + this.speed * 0.2) / distanceToBall;
                     vectorToBall.scale(scale);
                     this.position.add(vectorToBall);
                     //if difference between ball and player is smaller than 25, animation = false
@@ -62,7 +56,7 @@ var EIA2_Endaufgabe_HannahDuerr;
                 }
                 else if (distanceToStartposition > 0) {
                     //spieler läuft zurück zu seiner startposition
-                    let scale = 1 / distanceToStartposition;
+                    let scale = (1 + this.speed * 0.2) / distanceToStartposition;
                     vectorToStartposition.scale(scale);
                     this.position.add(vectorToStartposition);
                 }
@@ -72,6 +66,12 @@ var EIA2_Endaufgabe_HannahDuerr;
         isClicked(_clickPosition) {
             let difference = new EIA2_Endaufgabe_HannahDuerr.Vector(_clickPosition.x - this.position.x, _clickPosition.y - this.position.y);
             return (difference.length < this.radius);
+        }
+        toggleActivity() {
+            window.setTimeout(this.activate, 1500);
+        }
+        activate() {
+            this.active = true;
         }
     }
     EIA2_Endaufgabe_HannahDuerr.Player = Player;

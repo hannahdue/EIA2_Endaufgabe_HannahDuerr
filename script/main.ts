@@ -18,7 +18,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     export let animation: boolean = false;
     let animationInterval: number;
     export let ball: Ball;
-    export let playerAtBall: Player;
+    export let playerAtBall: Player | null;
 
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
@@ -124,7 +124,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 update();
-        }, 20);
+        },                                     20);
 
         console.log("Simulation started.");
     }
@@ -221,21 +221,16 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
             //stop player at the ball from reacting to the ball he just shot away
-            playerAtBall.active = false;
-            window.setTimeout(function (): void {
-                playerAtBall.active = true;
-            },                1500);
+            if (playerAtBall) {
+                playerAtBall.active = false;
+                playerAtBall.toggleActivity();
+            }
+
             //move ball
             ball.destination = new Vector(xpos, ypos);
             ball.startMoving = true;
             animation = true;
         }
-
-        // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
-        // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
-        // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
-
-        //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
     }
 
     function handleLeftGoal(): void {
@@ -293,7 +288,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");
-        scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
+        
+        if (playerAtBall) {
+            scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
+        } else {
+            scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?";
+        }
     }
 
     function initialisation(): void {

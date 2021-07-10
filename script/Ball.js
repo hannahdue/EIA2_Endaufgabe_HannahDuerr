@@ -106,7 +106,13 @@ var EIA2_Endaufgabe_HannahDuerr;
                 let direction = new EIA2_Endaufgabe_HannahDuerr.Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
                 //je weiter destination vom Ball weg ist, desto ungenauer ist der Schuss
                 if (this.startMoving == true) {
-                    let distance = (Math.random() - 0.5) * (0.15 * direction.length);
+                    let distance = 0;
+                    //präzision abhängig vom Spieler am Ball
+                    if (EIA2_Endaufgabe_HannahDuerr.playerAtBall)
+                        distance = EIA2_Endaufgabe_HannahDuerr.playerAtBall.precision * (0.1 * direction.length);
+                    console.log("Abstand: " + direction.length + ", Präszisionswert vom Klick: " + distance);
+                    //präzision abhängig von der Distanz des Klicks zum Ball
+                    distance += (Math.random() - 0.5) * (0.25 * direction.length);
                     this.destination.x += distance;
                     this.destination.y += distance;
                     this.startMoving = false;

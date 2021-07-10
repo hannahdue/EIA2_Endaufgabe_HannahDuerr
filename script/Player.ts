@@ -37,12 +37,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.fillStyle = "black";
             crc2.fillText(this.jerseyNumber.toString(), this.position.x, this.position.y);
 
-            /*//Radius zum testen
-            crc2.beginPath();
-            crc2.arc(this.position.x, this.position.y, this.perceptionRadius, 0, 2 * Math.PI, false);
-            crc2.lineWidth = 1;
-            crc2.strokeStyle = "#6D6D6D";
-            crc2.stroke();*/
         }
 
         move(): void {
@@ -64,7 +58,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                     //move towards ball
                     //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
                     //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
-                    let scale: number = 1 / distanceToBall;
+                    let scale: number = (1 + this.speed * 0.2) / distanceToBall;
                     vectorToBall.scale(scale);
                     this.position.add(vectorToBall);
 
@@ -76,7 +70,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                     }
                 } else if (distanceToStartposition > 0) {
                     //spieler läuft zurück zu seiner startposition
-                    let scale: number = 1 / distanceToStartposition;
+                    let scale: number = (1 + this.speed * 0.2) / distanceToStartposition;
                     vectorToStartposition.scale(scale);
                     this.position.add(vectorToStartposition);
                 }
@@ -87,6 +81,14 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         isClicked(_clickPosition: Vector): Boolean {
             let difference: Vector = new Vector(_clickPosition.x - this.position.x, _clickPosition.y - this.position.y);
             return(difference.length < this.radius);
+        }
+
+        toggleActivity(): void {
+            window.setTimeout(this.activate, 1500);
+        }
+
+        private activate(): void {
+            this.active = true;
         }
     }
 }

@@ -63,6 +63,11 @@ var EIA2_Endaufgabe_HannahDuerr;
                 this.position.add(vectorToStartposition);
             }
         }
+        // Wenn Player geklickt wurde:
+        isClicked(_clickPosition) {
+            let difference = new EIA2_Endaufgabe_HannahDuerr.Vector(_clickPosition.x - this.position.x, _clickPosition.y - this.position.y);
+            return (difference.length < this.radius);
+        }
     }
     EIA2_Endaufgabe_HannahDuerr.Player = Player;
 })(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {}));

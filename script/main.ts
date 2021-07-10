@@ -93,6 +93,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
+        canvas.addEventListener("click", getPlayerInformation);
         crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -120,7 +121,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 update();
-        },                                     20);
+        }, 20);
 
         console.log("Simulation started.");
     }
@@ -158,7 +159,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);
-        
+
         // Spieler:
         for (let i: number = 0; i < 32; i++) {
 
@@ -188,11 +189,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function shootBall(_event: MouseEvent): void {
-       
+
         //to be able to check goals, set hitGoalA & hitGoalsB from ball to true
         ball.hitGoalA = false;
         ball.hitGoalB = false;
-        
+
         //get the position of the click and move the ball to this position
         //Mouseposition:
         let xpos: number = 0;
@@ -215,16 +216,51 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         // Eine neue random Position wird kalkuliert, innerhalb des Präzisionsradius vom Spieler
         // const randomX: number = randomBetween(minimumPrecision, maximumPrecision);
         // const randomY: number = randomBetween(minimumPrecision, maximumPrecision);
-       
+
         //je größer die Distanz zwischen ball und klick, desto größer ist der radius um den klickpunkt, aus dem eine zufällige Zielposition gewählt wird
     }
 
     function handleLeftGoal(): void {
-        goalsB ++;
+        goalsB++;
     }
 
     function handleRightGoal(): void {
-        goalsA ++;
+        goalsA++;
+    }
+
+    // Spielerinformation bekommen
+    function getPlayerInformation(_event: MouseEvent): void {
+
+        if (_event.shiftKey) {
+            // Aktuelle Mouseposition
+            let clickPosition: Vector = new Vector(_event.offsetX, _event.offsetY);
+
+            // getPlayerClick von der aktuellen Klickposition
+            let playerClicked: Player | null = getPlayerClick(clickPosition);
+
+            // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
+            if (playerClicked) {
+                showPlayerInformation(playerClicked);
+            }
+        }
+
+    }
+
+    // den geklickten Spieler bekommen
+    function getPlayerClick(_clickPosition: Vector): Player | null {
+
+        for (let player of allPlayers) {
+            if (player.isClicked(_clickPosition))
+                return player;
+        }
+
+        return null; // Rückgabewert null, wenn kein Spieler unter der Mouseposition ist
+    }
+
+    // Player Display
+    function showPlayerInformation(_playerClicked: Player): void {
+        let playerDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#playerInformation");
+        playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
 
     function update(): void {

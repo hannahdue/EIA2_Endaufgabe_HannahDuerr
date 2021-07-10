@@ -78,6 +78,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", shootBall);
+        canvas.addEventListener("click", getPlayerInformation);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -187,6 +188,32 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     function handleRightGoal() {
         goalsA++;
+    }
+    // Spielerinformation bekommen
+    function getPlayerInformation(_event) {
+        if (_event.shiftKey) {
+            // Aktuelle Mouseposition
+            let clickPosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
+            // getPlayerClick von der aktuellen Klickposition
+            let playerClicked = getPlayerClick(clickPosition);
+            // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
+            if (playerClicked) {
+                showPlayerInformation(playerClicked);
+            }
+        }
+    }
+    // den geklickten Spieler bekommen
+    function getPlayerClick(_clickPosition) {
+        for (let player of allPlayers) {
+            if (player.isClicked(_clickPosition))
+                return player;
+        }
+        return null; // Rückgabewert null, wenn kein Spieler unter der Mouseposition ist
+    }
+    // Player Display
+    function showPlayerInformation(_playerClicked) {
+        let playerDisplay = document.querySelector("div#playerInformation");
+        playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
     function update() {
         //draw the background

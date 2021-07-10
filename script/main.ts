@@ -18,6 +18,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     export let animation: boolean = false;
     let animationInterval: number;
     export let ball: Ball;
+    export let playerAtBall: Player;
 
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
@@ -110,18 +111,20 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //create the background and the ball
         field = new Playingfield();
-        ball = new Ball(new Vector(500, 275));
-        moveables.push(ball);
 
         //create people
         createPeopleOnField();
+
+        //create ball
+        ball = new Ball(new Vector(500, 275));
+        moveables.push(ball);
 
         //start animation
         animation = true;
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 update();
-        }, 20);
+        },                                     20);
 
         console.log("Simulation started.");
     }
@@ -273,6 +276,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     function update(): void {
         //draw the background
         field.draw();
+
         //update animation
         for (let moveable of moveables) {
             moveable.move();
@@ -283,7 +287,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");
-        scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?"; //add jerseyNumber of player in possesion of the ball 
+        scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
     }
 
     function initialisation(): void {

@@ -52,8 +52,9 @@ var EIA2_Endaufgabe_HannahDuerr;
                 this.position.add(vectorToBall);
                 //if difference between ball and player is smaller than 25, animation = false
                 //wenn spieler am Ball ankommt, stoppt animation
-                if (distanceToBall > 23 && distanceToBall < 26) {
+                if (distanceToBall > 24 && distanceToBall < 26) {
                     EIA2_Endaufgabe_HannahDuerr.animation = false;
+                    EIA2_Endaufgabe_HannahDuerr.playerAtBall = this;
                 }
             }
             else if (distanceToStartposition > 0) {

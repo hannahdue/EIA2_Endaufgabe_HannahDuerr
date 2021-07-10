@@ -5,7 +5,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         draw() {
             //mark the area of the canvas
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
-            EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "silver";
+            EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "lightgrey";
             EIA2_Endaufgabe_HannahDuerr.crc2.fillRect(0, 0, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.width, EIA2_Endaufgabe_HannahDuerr.crc2.canvas.height);
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             //do the first translation to place field in the middle of the canvas area:

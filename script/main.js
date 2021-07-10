@@ -92,10 +92,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         getUserPreferences();
         //create the background and the ball
         field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
-        EIA2_Endaufgabe_HannahDuerr.ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
-        moveables.push(EIA2_Endaufgabe_HannahDuerr.ball);
         //create people
         createPeopleOnField();
+        //create ball
+        EIA2_Endaufgabe_HannahDuerr.ball = new EIA2_Endaufgabe_HannahDuerr.Ball(new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275));
+        moveables.push(EIA2_Endaufgabe_HannahDuerr.ball);
         //start animation
         EIA2_Endaufgabe_HannahDuerr.animation = true;
         animationInterval = window.setInterval(function () {
@@ -234,7 +235,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             sparePlayer.draw();
         }
         let scoreDisplay = document.querySelector("div#score");
-        scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?"; //add jerseyNumber of player in possesion of the ball 
+        scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + EIA2_Endaufgabe_HannahDuerr.playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
     }
     function initialisation() {
         //show setings container again

@@ -67,8 +67,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
                 //if difference between ball and player is smaller than 25, animation = false
                 //wenn spieler am Ball ankommt, stoppt animation
-                if (distanceToBall > 23 && distanceToBall < 26) {
+                if (distanceToBall > 24 && distanceToBall < 26) {
                     animation = false;
+                    playerAtBall = this;
                 }
             } else if (distanceToStartposition > 0) {
                 //spieler läuft zurück zu seiner startposition

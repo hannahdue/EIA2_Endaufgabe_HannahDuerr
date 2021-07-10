@@ -11,14 +11,14 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startPosition: Vector;
         perceptionRadius: number = 100;
 
-        constructor(_position: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
+        constructor(_position: Vector, _startPosition: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
             super(_position);
+            this.startPosition = _startPosition;
             this.team = _team;
             this.color = _color;
             this.speed = _speed;
             this.precision = _precision;
             this.jerseyNumber = _jerseyNumber;
-            this.startPosition = _position;
         }
 
         draw(): void {

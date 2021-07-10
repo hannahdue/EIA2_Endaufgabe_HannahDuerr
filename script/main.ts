@@ -92,8 +92,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
-        canvas.addEventListener("click", shootBall);
-        canvas.addEventListener("click", getPlayerInformation);
+        canvas.addEventListener("click", handleCanvasClick);
+        //canvas.addEventListener("click", getPlayerInformation);
         crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -164,6 +164,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         for (let i: number = 0; i < 32; i++) {
 
             let position: Vector = new Vector(playerInformation[i].x, playerInformation[i].y);
+            let startPosition: Vector = new Vector(playerInformation[i].x, playerInformation[i].y);
             let team: string = playerInformation[i].team; // from array;
             let speed: number = randomBetween(minimumSpeed, maximumSpeed);
             let precision: number = randomBetween(minimumPrecision, maximumPrecision);
@@ -175,7 +176,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 color = teamBColor;
             }
 
-            const player: Player = new Player(position, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
+            const player: Player = new Player(position, startPosition, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
             // bekommen noch Geschwindigkeit und Präzision
 
             //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
@@ -185,6 +186,14 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             } else if (jerseyNumber > 22) {
                 sparePlayers.push(player);
             }
+        }
+    }
+
+    function handleCanvasClick(_event: MouseEvent): void {
+        if (_event.shiftKey) {
+            getPlayerInformation(_event);
+        } else {
+            shootBall(_event);
         }
     }
 
@@ -231,17 +240,15 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     // Spielerinformation bekommen
     function getPlayerInformation(_event: MouseEvent): void {
 
-        if (_event.shiftKey) {
-            // Aktuelle Mouseposition
-            let clickPosition: Vector = new Vector(_event.offsetX, _event.offsetY);
+        // Aktuelle Mouseposition
+        let clickPosition: Vector = new Vector(_event.offsetX, _event.offsetY);
 
-            // getPlayerClick von der aktuellen Klickposition
-            let playerClicked: Player | null = getPlayerClick(clickPosition);
+        // getPlayerClick von der aktuellen Klickposition
+        let playerClicked: Player | null = getPlayerClick(clickPosition);
 
-            // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
-            if (playerClicked) {
-                showPlayerInformation(playerClicked);
-            }
+        // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
+        if (playerClicked) {
+            showPlayerInformation(playerClicked);
         }
 
     }

@@ -77,8 +77,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
-        canvas.addEventListener("click", shootBall);
-        canvas.addEventListener("click", getPlayerInformation);
+        canvas.addEventListener("click", handleCanvasClick);
+        //canvas.addEventListener("click", getPlayerInformation);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -135,6 +135,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         // Spieler:
         for (let i = 0; i < 32; i++) {
             let position = new EIA2_Endaufgabe_HannahDuerr.Vector(playerInformation[i].x, playerInformation[i].y);
+            let startPosition = new EIA2_Endaufgabe_HannahDuerr.Vector(playerInformation[i].x, playerInformation[i].y);
             let team = playerInformation[i].team; // from array;
             let speed = randomBetween(minimumSpeed, maximumSpeed);
             let precision = randomBetween(minimumPrecision, maximumPrecision);
@@ -146,7 +147,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             else if (team == "B") {
                 color = teamBColor;
             }
-            const player = new EIA2_Endaufgabe_HannahDuerr.Player(position, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
+            const player = new EIA2_Endaufgabe_HannahDuerr.Player(position, startPosition, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
             // bekommen noch Geschwindigkeit und Präzision
             //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
             allPlayers.push(player);
@@ -156,6 +157,14 @@ var EIA2_Endaufgabe_HannahDuerr;
             else if (jerseyNumber > 22) {
                 sparePlayers.push(player);
             }
+        }
+    }
+    function handleCanvasClick(_event) {
+        if (_event.shiftKey) {
+            getPlayerInformation(_event);
+        }
+        else {
+            shootBall(_event);
         }
     }
     function shootBall(_event) {
@@ -191,15 +200,13 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     // Spielerinformation bekommen
     function getPlayerInformation(_event) {
-        if (_event.shiftKey) {
-            // Aktuelle Mouseposition
-            let clickPosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
-            // getPlayerClick von der aktuellen Klickposition
-            let playerClicked = getPlayerClick(clickPosition);
-            // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
-            if (playerClicked) {
-                showPlayerInformation(playerClicked);
-            }
+        // Aktuelle Mouseposition
+        let clickPosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
+        // getPlayerClick von der aktuellen Klickposition
+        let playerClicked = getPlayerClick(clickPosition);
+        // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
+        if (playerClicked) {
+            showPlayerInformation(playerClicked);
         }
     }
     // den geklickten Spieler bekommen

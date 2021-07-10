@@ -2,16 +2,16 @@
 var EIA2_Endaufgabe_HannahDuerr;
 (function (EIA2_Endaufgabe_HannahDuerr) {
     class Player extends EIA2_Endaufgabe_HannahDuerr.Moveable {
-        constructor(_position, _team, _color, _speed, _precision, _jerseyNumber) {
+        constructor(_position, _startPosition, _team, _color, _speed, _precision, _jerseyNumber) {
             super(_position);
             this.radius = 15;
             this.perceptionRadius = 100;
+            this.startPosition = _startPosition;
             this.team = _team;
             this.color = _color;
             this.speed = _speed;
             this.precision = _precision;
             this.jerseyNumber = _jerseyNumber;
-            this.startPosition = _position;
         }
         draw() {
             //draw player center

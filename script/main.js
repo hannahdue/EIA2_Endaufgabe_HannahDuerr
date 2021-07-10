@@ -184,6 +184,12 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
+            //stop player at the ball from reacting to the ball he just shot away
+            EIA2_Endaufgabe_HannahDuerr.playerAtBall.active = false;
+            window.setTimeout(function () {
+                EIA2_Endaufgabe_HannahDuerr.playerAtBall.active = true;
+            }, 1500);
+            //move ball
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
             EIA2_Endaufgabe_HannahDuerr.animation = true;

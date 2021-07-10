@@ -6,6 +6,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             super(_position);
             this.radius = 15;
             this.perceptionRadius = 100;
+            this.active = true;
             this.startPosition = _startPosition;
             this.team = _team;
             this.color = _color;
@@ -37,31 +38,34 @@ var EIA2_Endaufgabe_HannahDuerr;
         move() {
             //move
             //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
-            //1. Distanz zum Ball ausrechnen
-            let vectorToBall = new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.ball.position.x - this.position.x, EIA2_Endaufgabe_HannahDuerr.ball.position.y - this.position.y); //differenzvektor
-            let distanceToBall = vectorToBall.length; //länge des differenzvektors
-            let vectorToStartposition = new EIA2_Endaufgabe_HannahDuerr.Vector(this.startPosition.x - this.position.x, this.startPosition.y - this.position.y); //differenzvektor
-            let distanceToStartposition = vectorToStartposition.length; //länge des differenzvektors
-            //2. Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Spielers
-            if (distanceToBall < this.perceptionRadius) {
-                //move towards ball
-                //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
-                //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
-                let scale = 1 / distanceToBall;
-                vectorToBall.scale(scale);
-                this.position.add(vectorToBall);
-                //if difference between ball and player is smaller than 25, animation = false
-                //wenn spieler am Ball ankommt, stoppt animation
-                if (distanceToBall > 24 && distanceToBall < 26) {
-                    EIA2_Endaufgabe_HannahDuerr.animation = false;
-                    EIA2_Endaufgabe_HannahDuerr.playerAtBall = this;
+            //nur aktiv bewegen, wenn er nicht gerade geschossen hat
+            if (this.active == true) {
+                //1. Distanz zum Ball ausrechnen
+                let vectorToBall = new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.ball.position.x - this.position.x, EIA2_Endaufgabe_HannahDuerr.ball.position.y - this.position.y); //differenzvektor
+                let distanceToBall = vectorToBall.length; //länge des differenzvektors
+                let vectorToStartposition = new EIA2_Endaufgabe_HannahDuerr.Vector(this.startPosition.x - this.position.x, this.startPosition.y - this.position.y); //differenzvektor
+                let distanceToStartposition = vectorToStartposition.length; //länge des differenzvektors
+                //2. Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Spielers
+                if (distanceToBall < this.perceptionRadius) {
+                    //move towards ball
+                    //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
+                    //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
+                    let scale = 1 / distanceToBall;
+                    vectorToBall.scale(scale);
+                    this.position.add(vectorToBall);
+                    //if difference between ball and player is smaller than 25, animation = false
+                    //wenn spieler am Ball ankommt, stoppt animation
+                    if (distanceToBall > 24 && distanceToBall < 26) {
+                        EIA2_Endaufgabe_HannahDuerr.animation = false;
+                        EIA2_Endaufgabe_HannahDuerr.playerAtBall = this;
+                    }
                 }
-            }
-            else if (distanceToStartposition > 0) {
-                //spieler läuft zurück zu seiner startposition
-                let scale = 1 / distanceToStartposition;
-                vectorToStartposition.scale(scale);
-                this.position.add(vectorToStartposition);
+                else if (distanceToStartposition > 0) {
+                    //spieler läuft zurück zu seiner startposition
+                    let scale = 1 / distanceToStartposition;
+                    vectorToStartposition.scale(scale);
+                    this.position.add(vectorToStartposition);
+                }
             }
         }
         // Wenn Player geklickt wurde:

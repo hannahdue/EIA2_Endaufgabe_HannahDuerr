@@ -124,7 +124,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 update();
-        },                                     20);
+        }, 20);
 
         console.log("Simulation started.");
     }
@@ -220,6 +220,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
+            //stop player at the ball from reacting to the ball he just shot away
+            playerAtBall.active = false;
+            window.setTimeout(function (): void {
+                playerAtBall.active = true;
+            },                1500);
+            //move ball
             ball.destination = new Vector(xpos, ypos);
             ball.startMoving = true;
             animation = true;

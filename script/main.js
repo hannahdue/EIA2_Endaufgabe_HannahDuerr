@@ -15,7 +15,9 @@ var EIA2_Endaufgabe_HannahDuerr;
     let goalsB = 0;
     let animationInterval;
     let field;
+    let draggedPlayer;
     EIA2_Endaufgabe_HannahDuerr.animation = false;
+    let listenToMouseMove = false;
     let SOCCER_EVENT;
     (function (SOCCER_EVENT) {
         SOCCER_EVENT["RIGHTGOAL_HIT"] = "rightGoalHit";
@@ -77,7 +79,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
-        canvas.addEventListener("click", handleCanvasClick);
+        canvas.addEventListener("mousedown", handleCanvasClick);
+        canvas.addEventListener("mousemove", dragPlayer);
+        canvas.addEventListener("mouseup", switchPlayer);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -98,9 +102,12 @@ var EIA2_Endaufgabe_HannahDuerr;
         moveables.push(EIA2_Endaufgabe_HannahDuerr.ball);
         //start animation
         EIA2_Endaufgabe_HannahDuerr.animation = true;
+        //update draw methods all the time
+        window.setInterval(drawUpdate, 20);
+        //animate only when animation is on
         animationInterval = window.setInterval(function () {
             if (EIA2_Endaufgabe_HannahDuerr.animation == true)
-                update();
+                animationUpdate();
         }, 20);
         console.log("Simulation started.");
     }
@@ -160,12 +167,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
     }
     function handleCanvasClick(_event) {
-        if (_event.shiftKey) {
-            getPlayerInformation(_event);
+        if (_event.shiftKey || _event.altKey) {
+            getPlayer(_event);
         }
-        else if (EIA2_Endaufgabe_HannahDuerr.nobodyIsRunning == true) { // nur wenn jemand am Ball ist kann man klicken
+        else if (EIA2_Endaufgabe_HannahDuerr.animation == false) { // nur wenn jemand am Ball ist kann man klicken
             shootBall(_event);
-            EIA2_Endaufgabe_HannahDuerr.nobodyIsRunning = false; // damit man währenddessen Spieler rennen nicht klicken kann
         }
     }
     function shootBall(_event) {
@@ -184,11 +190,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
-            //stop player at the ball from reacting to the ball he just shot away
-            /*if (playerAtBall) {
-                playerAtBall.active = false;
-                playerAtBall.toggleActivity();
-            }*/
             //move ball
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
@@ -202,15 +203,37 @@ var EIA2_Endaufgabe_HannahDuerr;
         goalsA++;
     }
     // Spielerinformation bekommen
-    function getPlayerInformation(_event) {
+    function getPlayer(_event) {
         // Aktuelle Mouseposition
         let clickPosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Klickposition
         let playerClicked = getPlayerClick(clickPosition);
         // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
         if (playerClicked) {
-            showPlayerInformation(playerClicked);
+            if (_event.shiftKey) {
+                showPlayerInformation(playerClicked);
+            }
+            else if (_event.altKey) {
+                listenToMouseMove = true;
+                draggedPlayer = playerClicked;
+                console.log("draggedPlayer: " + draggedPlayer);
+            }
         }
+    }
+    function dragPlayer(_event) {
+        //get mouse position all the time while mouse is moving
+        //set position of draggedPlayer to mouseposition
+        if (_event.altKey && listenToMouseMove == true) {
+            let mousePosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
+            if (draggedPlayer)
+                draggedPlayer.position = mousePosition;
+        }
+    }
+    function switchPlayer(_event) {
+        //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
+        //switch only if player are from the same team
+        //draggedPlayer entfernen
+        draggedPlayer = undefined;
     }
     // den geklickten Spieler bekommen
     function getPlayerClick(_clickPosition) {
@@ -225,16 +248,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         let playerDisplay = document.querySelector("div#playerInformation");
         playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
-    function update() {
-        //draw the background
-        field.draw();
+    function animationUpdate() {
         //update animation
         for (let moveable of moveables) {
             moveable.move();
-            moveable.draw();
-        }
-        for (let sparePlayer of sparePlayers) {
-            sparePlayer.draw();
+            //moveable.draw();
         }
         let scoreDisplay = document.querySelector("div#score");
         if (EIA2_Endaufgabe_HannahDuerr.playerAtBall) {
@@ -242,6 +260,15 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
         else {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?";
+        }
+    }
+    function drawUpdate() {
+        field.draw();
+        for (let moveable of moveables) {
+            moveable.draw();
+        }
+        for (let sparePlayer of sparePlayers) {
+            sparePlayer.draw();
         }
     }
     function initialisation() {

@@ -16,10 +16,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let goalsB: number = 0;
     let animationInterval: number;
     let field: Playingfield;
+    let draggedPlayer: Player | undefined;
     export let ball: Ball;
     export let playerAtBall: Player | null;
     export let animation: boolean = false;
-    export let nobodyIsRunning: boolean;
+    let listenToMouseMove: boolean = false;
 
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
@@ -94,7 +95,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
-        canvas.addEventListener("click", handleCanvasClick);
+
+        canvas.addEventListener("mousedown", handleCanvasClick);
+        canvas.addEventListener("mousemove", dragPlayer);
+        canvas.addEventListener("mouseup", switchPlayer);
+
         crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -121,9 +126,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //start animation
         animation = true;
+        //update draw methods all the time
+        window.setInterval(drawUpdate, 20);
+        //animate only when animation is on
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
-                update();
+                animationUpdate();
         },                                     20);
 
         console.log("Simulation started.");
@@ -193,11 +201,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function handleCanvasClick(_event: MouseEvent): void {
-        if (_event.shiftKey) {
-            getPlayerInformation(_event);
-        } else if (nobodyIsRunning == true) { // nur wenn jemand am Ball ist kann man klicken
+        if (_event.shiftKey || _event.altKey) {
+            getPlayer(_event);
+        } else if (animation == false) { // nur wenn jemand am Ball ist kann man klicken
             shootBall(_event);
-            nobodyIsRunning = false; // damit man währenddessen Spieler rennen nicht klicken kann
         }
     }
 
@@ -221,12 +228,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
-            //stop player at the ball from reacting to the ball he just shot away
-            /*if (playerAtBall) {
-                playerAtBall.active = false;
-                playerAtBall.toggleActivity();
-            }*/
-
             //move ball
             ball.destination = new Vector(xpos, ypos);
             ball.startMoving = true;
@@ -243,7 +244,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     // Spielerinformation bekommen
-    function getPlayerInformation(_event: MouseEvent): void {
+    function getPlayer(_event: MouseEvent): void {
 
         // Aktuelle Mouseposition
         let clickPosition: Vector = new Vector(_event.offsetX, _event.offsetY);
@@ -253,9 +254,32 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
         if (playerClicked) {
-            showPlayerInformation(playerClicked);
+            if (_event.shiftKey) {
+                showPlayerInformation(playerClicked);
+            } else if (_event.altKey) {
+                listenToMouseMove = true;
+                draggedPlayer = playerClicked;
+                console.log("draggedPlayer: " + draggedPlayer);
+            }
         }
+    }
 
+    function dragPlayer(_event: MouseEvent): void {
+        //get mouse position all the time while mouse is moving
+        //set position of draggedPlayer to mouseposition
+        if (_event.altKey && listenToMouseMove == true) {
+            let mousePosition: Vector = new Vector(_event.offsetX, _event.offsetY);
+            if (draggedPlayer)
+                draggedPlayer.position = mousePosition;
+        }
+    }
+
+    function switchPlayer(_event: MouseEvent): void {
+        //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
+        //switch only if player are from the same team
+        
+         //draggedPlayer entfernen
+        draggedPlayer = undefined;
     }
 
     // den geklickten Spieler bekommen
@@ -275,25 +299,31 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
 
-    function update(): void {
-        //draw the background
-        field.draw();
-
+    function animationUpdate(): void {
         //update animation
         for (let moveable of moveables) {
             moveable.move();
-            moveable.draw();
-        }
-        for (let sparePlayer of sparePlayers) {
-            sparePlayer.draw();
+            //moveable.draw();
         }
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");
-        
+
         if (playerAtBall) {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
         } else {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?";
+        }
+    }
+
+    function drawUpdate(): void {
+        field.draw();
+
+        for (let moveable of moveables) {
+            moveable.draw();
+        }
+
+        for (let sparePlayer of sparePlayers) {
+            sparePlayer.draw();
         }
     }
 

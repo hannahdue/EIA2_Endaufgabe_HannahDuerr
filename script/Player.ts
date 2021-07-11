@@ -67,7 +67,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                     if (distanceToBall > 24 && distanceToBall < 26) {
                         animation = false;
                         playerAtBall = this;
-                        nobodyIsRunning = true; // damit man ab da wieder klicken kann
                     }
                 } else if (distanceToStartposition > 5) {
                     //spieler läuft zurück zu seiner startposition

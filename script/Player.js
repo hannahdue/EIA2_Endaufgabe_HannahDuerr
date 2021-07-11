@@ -52,7 +52,6 @@ var EIA2_Endaufgabe_HannahDuerr;
                 if (distanceToBall > 24 && distanceToBall < 26) {
                     EIA2_Endaufgabe_HannahDuerr.animation = false;
                     EIA2_Endaufgabe_HannahDuerr.playerAtBall = this;
-                    EIA2_Endaufgabe_HannahDuerr.nobodyIsRunning = true; // damit man ab da wieder klicken kann
                 }
             }
             else if (distanceToStartposition > 5) {

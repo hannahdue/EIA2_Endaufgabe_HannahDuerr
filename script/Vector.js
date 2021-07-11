@@ -5,15 +5,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         constructor(_x, _y) {
             this.set(_x, _y);
         }
-        static getDifference(_v0, _v1) {
+        /*public static getDifference(_v0: Vector, _v1: Vector): Vector {
             return new Vector(_v0.x - _v1.x, _v0.y - _v1.y);
-        }
+        }*/
         get length() {
             return Math.hypot(this.x, this.y);
-        }
-        set(_x, _y) {
-            this.x = _x;
-            this.y = _y;
         }
         scale(_factor) {
             this.x *= _factor;
@@ -22,6 +18,10 @@ var EIA2_Endaufgabe_HannahDuerr;
         add(_addend) {
             this.x += _addend.x;
             this.y += _addend.y;
+        }
+        set(_x, _y) {
+            this.x = _x;
+            this.y = _y;
         }
     }
     EIA2_Endaufgabe_HannahDuerr.Vector = Vector;

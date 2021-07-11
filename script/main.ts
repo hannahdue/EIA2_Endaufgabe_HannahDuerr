@@ -7,18 +7,19 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let pausebutton: HTMLSpanElement;
 
     let minimumSpeed: number = 1;
-    let maximumSpeed: number = 5;
-    let minimumPrecision: number = 1;
+    let maximumSpeed: number = 6;
+    let minimumPrecision: number = 0;
     let maximumPrecision: number = 5;
     let teamAColor: string = "66b2ff";
     let teamBColor: string = "ff3333";
     let goalsA: number = 0;
     let goalsB: number = 0;
-    let field: Playingfield;
-    export let animation: boolean = false;
     let animationInterval: number;
+    let field: Playingfield;
     export let ball: Ball;
     export let playerAtBall: Player | null;
+    export let animation: boolean = false;
+    export let nobodyIsRunning: boolean;
 
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
@@ -94,7 +95,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", handleCanvasClick);
-        //canvas.addEventListener("click", getPlayerInformation);
         crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -195,8 +195,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     function handleCanvasClick(_event: MouseEvent): void {
         if (_event.shiftKey) {
             getPlayerInformation(_event);
-        } else {
+        } else if (nobodyIsRunning == true) { // nur wenn jemand am Ball ist kann man klicken
             shootBall(_event);
+            nobodyIsRunning = false; // damit man währenddessen Spieler rennen nicht klicken kann
         }
     }
 
@@ -221,10 +222,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
             //stop player at the ball from reacting to the ball he just shot away
-            if (playerAtBall) {
+            /*if (playerAtBall) {
                 playerAtBall.active = false;
                 playerAtBall.toggleActivity();
-            }
+            }*/
 
             //move ball
             ball.destination = new Vector(xpos, ypos);

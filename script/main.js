@@ -6,16 +6,16 @@ var EIA2_Endaufgabe_HannahDuerr;
     let restartbutton;
     let pausebutton;
     let minimumSpeed = 1;
-    let maximumSpeed = 5;
-    let minimumPrecision = 1;
+    let maximumSpeed = 6;
+    let minimumPrecision = 0;
     let maximumPrecision = 5;
     let teamAColor = "66b2ff";
     let teamBColor = "ff3333";
     let goalsA = 0;
     let goalsB = 0;
+    let animationInterval;
     let field;
     EIA2_Endaufgabe_HannahDuerr.animation = false;
-    let animationInterval;
     let SOCCER_EVENT;
     (function (SOCCER_EVENT) {
         SOCCER_EVENT["RIGHTGOAL_HIT"] = "rightGoalHit";
@@ -78,7 +78,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
         canvas.addEventListener("click", handleCanvasClick);
-        //canvas.addEventListener("click", getPlayerInformation);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
@@ -164,8 +163,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         if (_event.shiftKey) {
             getPlayerInformation(_event);
         }
-        else {
+        else if (EIA2_Endaufgabe_HannahDuerr.nobodyIsRunning == true) { // nur wenn jemand am Ball ist kann man klicken
             shootBall(_event);
+            EIA2_Endaufgabe_HannahDuerr.nobodyIsRunning = false; // damit man währenddessen Spieler rennen nicht klicken kann
         }
     }
     function shootBall(_event) {
@@ -185,10 +185,10 @@ var EIA2_Endaufgabe_HannahDuerr;
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
             //stop player at the ball from reacting to the ball he just shot away
-            if (EIA2_Endaufgabe_HannahDuerr.playerAtBall) {
-                EIA2_Endaufgabe_HannahDuerr.playerAtBall.active = false;
-                EIA2_Endaufgabe_HannahDuerr.playerAtBall.toggleActivity();
-            }
+            /*if (playerAtBall) {
+                playerAtBall.active = false;
+                playerAtBall.toggleActivity();
+            }*/
             //move ball
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;

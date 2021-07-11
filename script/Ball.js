@@ -4,10 +4,10 @@ var EIA2_Endaufgabe_HannahDuerr;
     class Ball extends EIA2_Endaufgabe_HannahDuerr.Moveable {
         constructor(_position) {
             super(_position);
-            this.radius = 10;
             this.startMoving = false;
             this.hitGoalA = false;
             this.hitGoalB = false;
+            this.radius = 10;
         }
         draw() {
             // draw ball center

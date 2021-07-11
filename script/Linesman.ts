@@ -1,13 +1,13 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
     export class Linesman extends Moveable {
         
-        public radius: number = 15;
+        private radius: number = 15;
 
         constructor(_position: Vector) {
             super(_position);
         }
 
-        draw(): void { 
+        public draw(): void { 
             //draw linesman center
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, this.radius , 0, 2 * Math.PI);
@@ -92,7 +92,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.stroke();
         }
 
-        move(): void {
+        public move(): void {
             //move
             this.position.x = ball.position.x;
         }

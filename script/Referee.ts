@@ -1,7 +1,7 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
     export class Referee extends Moveable {
 
-        public radius: number = 15;
+        private radius: number = 15;
         private perceptionRadius: number = 400;
 
         constructor(_position: Vector) {

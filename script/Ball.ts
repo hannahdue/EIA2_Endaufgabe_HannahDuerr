@@ -1,11 +1,11 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
     export class Ball extends Moveable {
 
-        public radius: number = 10;
         public destination: Vector; //position of the click where the ball will roll to
         public startMoving: boolean = false;
-        hitGoalA: boolean = false;
-        hitGoalB: boolean = false;
+        public hitGoalA: boolean = false;
+        public hitGoalB: boolean = false;
+        private radius: number = 10;
 
         constructor(_position: Vector) {
             super(_position);

@@ -294,15 +294,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         // Aktuelle Mouseposition
         let mousePosition: Vector = new Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Mausposition
-        let playerClicked: Player | null = getPlayerClick(mousePosition);
-        if (playerClicked) {
-            playerAtMousePosition = playerClicked;
-            playerClicked = null;
-        }
-
-        if (playerAtMousePosition && playerAtMousePosition != draggedPlayer) {
-            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
-            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
+        let playerAtMousePosition: Player | null = getPlayerClick(mousePosition);
+        if (playerAtMousePosition) {
+            console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
+            console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
 
             if (draggedPlayer) {
                 //save startpositions of player to be exchanged
@@ -313,7 +308,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 playerAtMousePosition.startPosition = draggedPlayerStartposition;
                 playerAtMousePosition.position = draggedPlayerStartposition;
 
-                playerAtMousePosition = undefined;
                 //die Zuweisung von draggedPlayer entfernen
                 draggedPlayer = undefined;
             }
@@ -332,7 +326,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     function getPlayerClick(_clickPosition: Vector): Player | null {
 
         for (let player of allPlayers) {
-            if (player.isClicked(_clickPosition))
+            if (player.isClicked(_clickPosition) && player != draggedPlayer) //funktion mehr funktion als vorher gedacht?
                 return player;
         }
 

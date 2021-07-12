@@ -246,14 +246,10 @@ var EIA2_Endaufgabe_HannahDuerr;
         // Aktuelle Mouseposition
         let mousePosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Mausposition
-        let playerClicked = getPlayerClick(mousePosition);
-        if (playerClicked) {
-            playerAtMousePosition = playerClicked;
-            playerClicked = null;
-        }
-        if (playerAtMousePosition && playerAtMousePosition != draggedPlayer) {
-            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
-            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
+        let playerAtMousePosition = getPlayerClick(mousePosition);
+        if (playerAtMousePosition) {
+            console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
+            console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
             if (draggedPlayer) {
                 //save startpositions of player to be exchanged
                 let draggedPlayerStartposition = draggedPlayer.startPosition;
@@ -262,7 +258,6 @@ var EIA2_Endaufgabe_HannahDuerr;
                 draggedPlayer.startPosition = playerStartposition;
                 playerAtMousePosition.startPosition = draggedPlayerStartposition;
                 playerAtMousePosition.position = draggedPlayerStartposition;
-                playerAtMousePosition = undefined;
                 //die Zuweisung von draggedPlayer entfernen
                 draggedPlayer = undefined;
             }
@@ -278,7 +273,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     // den geklickten Spieler bekommen
     function getPlayerClick(_clickPosition) {
         for (let player of allPlayers) {
-            if (player.isClicked(_clickPosition))
+            if (player.isClicked(_clickPosition) && player != draggedPlayer) //funktion mehr funktion als vorher gedacht?
                 return player;
         }
         return null; // Rückgabewert null, wenn kein Spieler unter der Mouseposition ist

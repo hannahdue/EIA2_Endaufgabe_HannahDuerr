@@ -110,7 +110,7 @@ var EIA2_Endaufgabe_HannahDuerr;
                     //präzision abhängig vom Spieler am Ball
                     if (EIA2_Endaufgabe_HannahDuerr.playerAtBall)
                         distance = EIA2_Endaufgabe_HannahDuerr.playerAtBall.precision * (0.1 * direction.length);
-                    console.log("Abstand: " + direction.length + ", Präszisionswert vom Klick: " + distance);
+                    //console.log("Abstand: " + direction.length + ", Präszisionswert vom Klick: " + distance);
                     //präzision abhängig von der Distanz des Klicks zum Ball
                     distance += (Math.random() - 0.5) * (0.25 * direction.length);
                     this.destination.x += distance;

@@ -12,9 +12,35 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "#FF6700";
+            EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "white";
+            EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
-            EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "red";
+            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            // Streifen
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x - 13, this.position.y + 6);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 13, this.position.y - 6);
+            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x - 9, this.position.y + 12);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 15, this.position.y + 1);
+            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x - 15, this.position.y - 1);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 10, this.position.y - 12);
+            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x - 12, this.position.y - 8);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x - 1, this.position.y + 14);
+            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x - 6.5, this.position.y - 14);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 7, this.position.y + 13);
+            EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x + 2, this.position.y - 14);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 13, this.position.y + 9);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
         }
         move() {

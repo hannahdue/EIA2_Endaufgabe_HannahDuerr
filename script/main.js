@@ -5,6 +5,8 @@ var EIA2_Endaufgabe_HannahDuerr;
     let startbutton;
     let restartbutton;
     let pausebutton;
+    let instructionbutton;
+    let instructionBoard;
     let minimumSpeed = 1;
     let maximumSpeed = 6;
     let minimumPrecision = 0;
@@ -16,6 +18,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     let animationInterval;
     let field;
     let draggedPlayer;
+    let playerAtMousePosition;
     EIA2_Endaufgabe_HannahDuerr.animation = false;
     let listenToMouseMove = false;
     let SOCCER_EVENT;
@@ -63,7 +66,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     ];
     let moveables = [];
     let allPlayers = [];
-    let sparePlayers = [];
+    //let sparePlayers: Player[] = [];
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         //get the canvas and the rendering context
@@ -76,9 +79,12 @@ var EIA2_Endaufgabe_HannahDuerr;
         startbutton = document.querySelector("div#startbutton");
         restartbutton = document.querySelector("span#restart");
         pausebutton = document.querySelector("span#pause");
+        instructionbutton = document.querySelector("span#instruction");
+        instructionBoard = document.querySelector("#instructionBoard");
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
+        instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
         canvas.addEventListener("mousedown", handleCanvasClick);
         canvas.addEventListener("mousemove", dragPlayer);
         canvas.addEventListener("mouseup", switchPlayer);
@@ -123,6 +129,17 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.animation = true;
         }
     }
+    //Show and hide simulation instructions
+    function showInstruction() {
+        if (instructionBoard.classList.contains("is-hidden")) {
+            instructionBoard.classList.remove("is-hidden");
+            instructionBoard.classList.add("visible");
+        }
+        else if (instructionBoard.classList.contains("visible")) {
+            instructionBoard.classList.remove("visible");
+            instructionBoard.classList.add("is-hidden");
+        }
+    }
     function getUserPreferences() {
         let formData = new FormData(document.forms[0]);
         minimumSpeed = Number(formData.get("MinimumSpeedSlider"));
@@ -158,12 +175,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             // bekommen noch Geschwindigkeit und Präzision
             //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
             allPlayers.push(player);
-            if (jerseyNumber <= 22) {
-                moveables.push(player);
-            }
-            else if (jerseyNumber > 22) {
-                sparePlayers.push(player);
-            }
+            moveables.push(player);
         }
     }
     function handleCanvasClick(_event) {
@@ -216,24 +228,52 @@ var EIA2_Endaufgabe_HannahDuerr;
             else if (_event.altKey) {
                 listenToMouseMove = true;
                 draggedPlayer = playerClicked;
-                console.log("draggedPlayer: " + draggedPlayer);
+                //console.log("draggedPlayer: " + draggedPlayer);
             }
         }
     }
     function dragPlayer(_event) {
         //get mouse position all the time while mouse is moving
-        //set position of draggedPlayer to mouseposition
         if (_event.altKey && listenToMouseMove == true) {
             let mousePosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
+            //set position of draggedPlayer to mouseposition
             if (draggedPlayer)
                 draggedPlayer.position = mousePosition;
         }
     }
+    //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
     function switchPlayer(_event) {
-        //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
+        // Aktuelle Mouseposition
+        let mousePosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
+        // getPlayerClick von der aktuellen Mausposition
+        let playerClicked = getPlayerClick(mousePosition);
+        if (playerClicked) {
+            playerAtMousePosition = playerClicked;
+            playerClicked = null;
+        }
+        if (playerAtMousePosition && playerAtMousePosition != draggedPlayer) {
+            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
+            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
+            if (draggedPlayer) {
+                //save startpositions of player to be exchanged
+                let draggedPlayerStartposition = draggedPlayer.startPosition;
+                let playerStartposition = playerAtMousePosition.startPosition;
+                //exchange their start positions
+                draggedPlayer.startPosition = playerStartposition;
+                playerAtMousePosition.startPosition = draggedPlayerStartposition;
+                playerAtMousePosition.position = draggedPlayerStartposition;
+                playerAtMousePosition = undefined;
+                //die Zuweisung von draggedPlayer entfernen
+                draggedPlayer = undefined;
+            }
+        }
         //switch only if player are from the same team
-        //draggedPlayer entfernen
-        draggedPlayer = undefined;
+        //draggedPlayer absetzen
+        /*if (draggedPlayer) {
+            let newX: number = draggedPlayer.position.x;
+            let newY: number = draggedPlayer.position.y;
+            draggedPlayer.startPosition = new Vector(newX, newY); //neue position auf dem Spielfeld festlegen
+        }*/
     }
     // den geklickten Spieler bekommen
     function getPlayerClick(_clickPosition) {
@@ -267,8 +307,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         for (let moveable of moveables) {
             moveable.draw();
         }
-        for (let sparePlayer of sparePlayers) {
-            sparePlayer.draw();
+        for (let player of allPlayers) {
+            player.checkState();
         }
     }
     function initialisation() {
@@ -285,7 +325,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         //empty arrays of current objects in the simulation
         moveables = [];
         allPlayers = [];
-        sparePlayers = [];
         //animationsintervall beenden
         window.clearInterval(animationInterval);
     }

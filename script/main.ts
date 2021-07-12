@@ -5,6 +5,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let startbutton: HTMLDivElement;
     let restartbutton: HTMLSpanElement;
     let pausebutton: HTMLSpanElement;
+    let instructionbutton: HTMLSpanElement;
+    let instructionBoard: HTMLSpanElement;
 
     let minimumSpeed: number = 1;
     let maximumSpeed: number = 6;
@@ -17,6 +19,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let animationInterval: number;
     let field: Playingfield;
     let draggedPlayer: Player | undefined;
+    let playerAtMousePosition: Player | undefined;
     export let ball: Ball;
     export let playerAtBall: Player | null;
     export let animation: boolean = false;
@@ -75,7 +78,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     ];
     let moveables: Moveable[] = [];
     let allPlayers: Player[] = [];
-    let sparePlayers: Player[] = [];
+    //let sparePlayers: Player[] = [];
 
     window.addEventListener("load", handleLoad);
 
@@ -91,10 +94,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startbutton = <HTMLDivElement>document.querySelector("div#startbutton");
         restartbutton = <HTMLSpanElement>document.querySelector("span#restart");
         pausebutton = <HTMLSpanElement>document.querySelector("span#pause");
+        instructionbutton = <HTMLSpanElement>document.querySelector("span#instruction");
+        instructionBoard = <HTMLSpanElement>document.querySelector("#instructionBoard");
 
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
+        instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
 
         canvas.addEventListener("mousedown", handleCanvasClick);
         canvas.addEventListener("mousemove", dragPlayer);
@@ -132,7 +138,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 animationUpdate();
-        },                                     20);
+        }, 20);
 
         console.log("Simulation started.");
     }
@@ -148,6 +154,19 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         } else {
             animation = true;
         }
+    }
+
+    //Show and hide simulation instructions
+    function showInstruction(): void {
+
+        if (instructionBoard.classList.contains("is-hidden")) {
+            instructionBoard.classList.remove("is-hidden");
+            instructionBoard.classList.add("visible");
+        } else if (instructionBoard.classList.contains("visible")) {
+            instructionBoard.classList.remove("visible");
+            instructionBoard.classList.add("is-hidden");
+        }
+
     }
 
     function getUserPreferences(): void {
@@ -192,11 +211,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
             //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
             allPlayers.push(player);
-            if (jerseyNumber <= 22) {
-                moveables.push(player);
-            } else if (jerseyNumber > 22) {
-                sparePlayers.push(player);
-            }
+            moveables.push(player);
         }
     }
 
@@ -259,27 +274,58 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             } else if (_event.altKey) {
                 listenToMouseMove = true;
                 draggedPlayer = playerClicked;
-                console.log("draggedPlayer: " + draggedPlayer);
+                //console.log("draggedPlayer: " + draggedPlayer);
             }
         }
     }
 
     function dragPlayer(_event: MouseEvent): void {
         //get mouse position all the time while mouse is moving
-        //set position of draggedPlayer to mouseposition
         if (_event.altKey && listenToMouseMove == true) {
             let mousePosition: Vector = new Vector(_event.offsetX, _event.offsetY);
+            //set position of draggedPlayer to mouseposition
             if (draggedPlayer)
                 draggedPlayer.position = mousePosition;
         }
     }
 
+    //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
     function switchPlayer(_event: MouseEvent): void {
-        //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
+        // Aktuelle Mouseposition
+        let mousePosition: Vector = new Vector(_event.offsetX, _event.offsetY);
+        // getPlayerClick von der aktuellen Mausposition
+        let playerClicked: Player | null = getPlayerClick(mousePosition);
+        if (playerClicked) {
+            playerAtMousePosition = playerClicked;
+            playerClicked = null;
+        }
+
+        if (playerAtMousePosition && playerAtMousePosition != draggedPlayer) {
+            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
+            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
+
+            if (draggedPlayer) {
+                //save startpositions of player to be exchanged
+                let draggedPlayerStartposition: Vector = draggedPlayer.startPosition;
+                let playerStartposition: Vector = playerAtMousePosition.startPosition;
+                //exchange their start positions
+                draggedPlayer.startPosition = playerStartposition;
+                playerAtMousePosition.startPosition = draggedPlayerStartposition;
+                playerAtMousePosition.position = draggedPlayerStartposition;
+
+                playerAtMousePosition = undefined;
+                //die Zuweisung von draggedPlayer entfernen
+                draggedPlayer = undefined;
+            }
+        }
         //switch only if player are from the same team
-        
-         //draggedPlayer entfernen
-        draggedPlayer = undefined;
+
+        //draggedPlayer absetzen
+        /*if (draggedPlayer) {
+            let newX: number = draggedPlayer.position.x;
+            let newY: number = draggedPlayer.position.y;
+            draggedPlayer.startPosition = new Vector(newX, newY); //neue position auf dem Spielfeld festlegen
+        }*/
     }
 
     // den geklickten Spieler bekommen
@@ -322,8 +368,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             moveable.draw();
         }
 
-        for (let sparePlayer of sparePlayers) {
-            sparePlayer.draw();
+        for (let player of allPlayers) {
+            player.checkState();
         }
     }
 
@@ -343,7 +389,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //empty arrays of current objects in the simulation
         moveables = [];
         allPlayers = [];
-        sparePlayers = [];
 
         //animationsintervall beenden
         window.clearInterval(animationInterval);

@@ -19,7 +19,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let animationInterval: number;
     let field: Playingfield;
     let draggedPlayer: Player | undefined;
-    let playerAtMousePosition: Player | undefined;
+    //let playerAtMousePosition: Player | undefined;
     export let ball: Ball;
     export let playerAtBall: Player | null;
     export let animation: boolean = false;
@@ -158,7 +158,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     //Show and hide simulation instructions
     function showInstruction(): void {
-
+        
         if (instructionBoard.classList.contains("is-hidden")) {
             instructionBoard.classList.remove("is-hidden");
             instructionBoard.classList.add("visible");
@@ -295,11 +295,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         let mousePosition: Vector = new Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Mausposition
         let playerAtMousePosition: Player | null = getPlayerClick(mousePosition);
-        if (playerAtMousePosition) {
-            console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
-            console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
 
-            if (draggedPlayer) {
+        if (playerAtMousePosition && draggedPlayer) {
+            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
+            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
+
+            //switch only if player are from the same team
+            if (draggedPlayer.team == playerAtMousePosition.team) {
                 //save startpositions of player to be exchanged
                 let draggedPlayerStartposition: Vector = draggedPlayer.startPosition;
                 let playerStartposition: Vector = playerAtMousePosition.startPosition;
@@ -310,9 +312,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
                 //die Zuweisung von draggedPlayer entfernen
                 draggedPlayer = undefined;
+            } else {
+                draggedPlayer.position = draggedPlayer.startPosition;
+                draggedPlayer = undefined;
             }
         }
-        //switch only if player are from the same team
+
 
         //draggedPlayer absetzen
         /*if (draggedPlayer) {

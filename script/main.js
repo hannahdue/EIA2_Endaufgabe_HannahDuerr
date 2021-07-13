@@ -18,7 +18,6 @@ var EIA2_Endaufgabe_HannahDuerr;
     let animationInterval;
     let field;
     let draggedPlayer;
-    let playerAtMousePosition;
     EIA2_Endaufgabe_HannahDuerr.animation = false;
     let listenToMouseMove = false;
     let SOCCER_EVENT;
@@ -247,10 +246,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         let mousePosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Mausposition
         let playerAtMousePosition = getPlayerClick(mousePosition);
-        if (playerAtMousePosition) {
-            console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
-            console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
-            if (draggedPlayer) {
+        if (playerAtMousePosition && draggedPlayer) {
+            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
+            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
+            //switch only if player are from the same team
+            if (draggedPlayer.team == playerAtMousePosition.team) {
                 //save startpositions of player to be exchanged
                 let draggedPlayerStartposition = draggedPlayer.startPosition;
                 let playerStartposition = playerAtMousePosition.startPosition;
@@ -261,8 +261,11 @@ var EIA2_Endaufgabe_HannahDuerr;
                 //die Zuweisung von draggedPlayer entfernen
                 draggedPlayer = undefined;
             }
+            else {
+                draggedPlayer.position = draggedPlayer.startPosition;
+                draggedPlayer = undefined;
+            }
         }
-        //switch only if player are from the same team
         //draggedPlayer absetzen
         /*if (draggedPlayer) {
             let newX: number = draggedPlayer.position.x;

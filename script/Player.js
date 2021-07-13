@@ -7,7 +7,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             this.active = true;
             this.radius = 15;
             this.startPosition = _startPosition;
-            //this.team = _team;
+            this.team = _team;
             this.color = _color;
             this.speed = _speed;
             this.precision = _precision;

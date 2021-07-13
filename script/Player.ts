@@ -1,7 +1,7 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
     export class Player extends Moveable {
 
-        //public team: string;
+        public team: string;
         public startPosition: Vector;
         public speed: number;
         public precision: number;
@@ -14,7 +14,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         constructor(_position: Vector, _startPosition: Vector, _team: string, _color: string, _speed: number, _precision: number, _jerseyNumber: number) {
             super(_position);
             this.startPosition = _startPosition;
-            //this.team = _team;
+            this.team = _team;
             this.color = _color;
             this.speed = _speed;
             this.precision = _precision;

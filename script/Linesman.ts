@@ -1,7 +1,7 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
     export class Linesman extends Moveable {
         
-        private radius: number = 15;
+        private radius: number = 14;
 
         constructor(_position: Vector) {
             super(_position);

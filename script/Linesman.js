@@ -4,7 +4,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     class Linesman extends EIA2_Endaufgabe_HannahDuerr.Moveable {
         constructor(_position) {
             super(_position);
-            this.radius = 15;
+            this.radius = 14;
         }
         draw() {
             //draw linesman center

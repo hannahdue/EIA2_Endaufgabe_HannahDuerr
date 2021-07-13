@@ -131,13 +131,6 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
             //restore the first translation of the overall playing field
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
-            /*just to see the dimension of the canvas for testing reasons:
-            crc2.beginPath();
-            crc2.rect(1, 1, crc2.canvas.width - 2, crc2.canvas.height - 2);
-            crc2.closePath();
-            crc2.lineWidth = 1;
-            crc2.strokeStyle = "black";
-            crc2.stroke();*/
         }
     }
     EIA2_Endaufgabe_HannahDuerr.Playingfield = Playingfield;

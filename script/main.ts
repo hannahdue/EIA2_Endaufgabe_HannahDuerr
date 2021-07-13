@@ -8,7 +8,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let landingPage: HTMLDivElement;
     let startbutton: HTMLDivElement;
     let restartbutton: HTMLSpanElement;
-    let pausebutton: HTMLSpanElement;
     let instructionbutton: HTMLSpanElement;
     let instructionBoard: HTMLSpanElement;
 
@@ -93,13 +92,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         landingPage = <HTMLDivElement>document.querySelector("div#settingsContainer");
         startbutton = <HTMLDivElement>document.querySelector("div#startbutton");
         restartbutton = <HTMLSpanElement>document.querySelector("span#restart");
-        pausebutton = <HTMLSpanElement>document.querySelector("span#pause");
         instructionbutton = <HTMLSpanElement>document.querySelector("span#instruction");
         instructionBoard = <HTMLSpanElement>document.querySelector("span#instructionBoard");
 
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
-        pausebutton.addEventListener("click", pauseSimulation);
         instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
 
         canvas.addEventListener("mousedown", handleCanvasClick);
@@ -162,14 +159,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //animationsintervall beenden
         window.clearInterval(animationInterval);
-    }
-
-    function pauseSimulation(): void {
-        if (animation == true) {
-            animation = false;
-        } else {
-            animation = true;
-        }
     }
 
     //Show and hide simulation instructions

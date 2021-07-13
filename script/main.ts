@@ -163,12 +163,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     //Show and hide simulation instructions
     function showInstruction(): void {
-        if (instructionBoard.classList.contains("is-hidden")) {
-            instructionBoard.classList.remove("is-hidden");
+        if (instructionBoard.classList.contains("hidden")) {
+            instructionBoard.classList.remove("hidden");
             instructionBoard.classList.add("visible");
         } else if (instructionBoard.classList.contains("visible")) {
             instructionBoard.classList.remove("visible");
-            instructionBoard.classList.add("is-hidden");
+            instructionBoard.classList.add("hidden");
         }
     }
 

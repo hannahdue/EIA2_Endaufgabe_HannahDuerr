@@ -10,6 +10,14 @@ h2 {
     line-height: 1.5;
 }
 
+h4 {
+    margin: 10px;
+    margin-left: 0;
+    font-size: 22px;
+    font-weight: bolder;
+
+}
+
 div#simulationContainer {
     text-align: center;
     position: absolute;
@@ -59,26 +67,26 @@ span#restart {
 
 span#instruction {
     font-size: 36px;
-    font-weight: bolder; 
     position: absolute;
     top: 13px;
-    right: 110px;
+    right: 80px;
     cursor: pointer;
 }
 
 span#instructionBoard {
     top: 13px;
-    right: 100px;
+    right: 65px;
     position: absolute;
+    /*width: 250px;*/
     border: solid 1px;
     border-radius: 15px;
     padding: 30px;
     background-color: white;
-    text-align: center;
+    text-align: left;
     box-shadow: 8px 8px 25px #00000060;
 }
 
-.is-hidden {
+span.hidden {
     display: none;
 }
 

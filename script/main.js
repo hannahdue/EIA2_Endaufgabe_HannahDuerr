@@ -5,7 +5,6 @@ var EIA2_Endaufgabe_HannahDuerr;
     let landingPage;
     let startbutton;
     let restartbutton;
-    let pausebutton;
     let instructionbutton;
     let instructionBoard;
     let goalsA = 0;
@@ -76,12 +75,10 @@ var EIA2_Endaufgabe_HannahDuerr;
         landingPage = document.querySelector("div#settingsContainer");
         startbutton = document.querySelector("div#startbutton");
         restartbutton = document.querySelector("span#restart");
-        pausebutton = document.querySelector("span#pause");
         instructionbutton = document.querySelector("span#instruction");
         instructionBoard = document.querySelector("span#instructionBoard");
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
-        pausebutton.addEventListener("click", pauseSimulation);
         instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
         canvas.addEventListener("mousedown", handleCanvasClick);
         canvas.addEventListener("mousemove", dragPlayer);
@@ -132,23 +129,15 @@ var EIA2_Endaufgabe_HannahDuerr;
         //animationsintervall beenden
         window.clearInterval(animationInterval);
     }
-    function pauseSimulation() {
-        if (EIA2_Endaufgabe_HannahDuerr.animation == true) {
-            EIA2_Endaufgabe_HannahDuerr.animation = false;
-        }
-        else {
-            EIA2_Endaufgabe_HannahDuerr.animation = true;
-        }
-    }
     //Show and hide simulation instructions
     function showInstruction() {
-        if (instructionBoard.classList.contains("is-hidden")) {
-            instructionBoard.classList.remove("is-hidden");
+        if (instructionBoard.classList.contains("hidden")) {
+            instructionBoard.classList.remove("hidden");
             instructionBoard.classList.add("visible");
         }
         else if (instructionBoard.classList.contains("visible")) {
             instructionBoard.classList.remove("visible");
-            instructionBoard.classList.add("is-hidden");
+            instructionBoard.classList.add("hidden");
         }
     }
     function getUserPreferences() {

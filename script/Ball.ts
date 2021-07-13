@@ -152,7 +152,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         private checkGoals(): void {
             //check, if ball hit goals:
-            if (this.position.x < 100 && this.position.y > 250 && this.position.y < 300) {
+            if (this.position.x < 100 && this.position.y > 225 && this.position.y < 325) {
                 if (this.hitGoalA == false) {
                     //create custom event and dispatch it 
                     console.log("Goal for team B");
@@ -161,7 +161,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                     this.hitGoalA = true;
                 }
             }
-            if (this.position.x > 900 && this.position.y > 250 && this.position.y < 300) {
+            if (this.position.x > 900 && this.position.y > 225 && this.position.y < 325) {
                 if (this.hitGoalB == false) {
                     //create custom event and dispatch it 
                     console.log("Goal for team A");

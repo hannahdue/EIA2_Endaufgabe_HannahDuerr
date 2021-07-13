@@ -73,8 +73,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
             //Tor links
             crc2.beginPath();
-            crc2.moveTo(1, (500 / 2) - 25);
-            crc2.lineTo(1, (500 / 2) + 25);
+            crc2.moveTo(1, (500 / 2) - 50);
+            crc2.lineTo(1, (500 / 2) + 50);
             crc2.lineWidth = 9;
             crc2.stroke();
             crc2.closePath();
@@ -106,8 +106,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
             //Tor rechts 
             crc2.beginPath();
-            crc2.moveTo(800 - 1, (500 / 2) - 25);
-            crc2.lineTo(800 - 1, (500 / 2) + 25);
+            crc2.moveTo(800 - 1, (500 / 2) - 50);
+            crc2.lineTo(800 - 1, (500 / 2) + 50);
             crc2.lineWidth = 9;
             crc2.stroke();
             crc2.closePath();

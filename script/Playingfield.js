@@ -63,8 +63,8 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             //Tor links
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
-            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(1, (500 / 2) - 25);
-            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(1, (500 / 2) + 25);
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(1, (500 / 2) - 50);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(1, (500 / 2) + 50);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 9;
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
@@ -91,8 +91,8 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             //Tor rechts 
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
-            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(800 - 1, (500 / 2) - 25);
-            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(800 - 1, (500 / 2) + 25);
+            EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(800 - 1, (500 / 2) - 50);
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(800 - 1, (500 / 2) + 50);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 9;
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();

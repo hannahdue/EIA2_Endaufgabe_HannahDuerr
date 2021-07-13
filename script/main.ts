@@ -1,6 +1,10 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
 
     export let crc2: CanvasRenderingContext2D;
+    export let ball: Ball;
+    export let playerAtBall: Player | null;
+    export let animation: boolean = false;
+
     let landingPage: HTMLDivElement;
     let startbutton: HTMLDivElement;
     let restartbutton: HTMLSpanElement;
@@ -8,22 +12,18 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let instructionbutton: HTMLSpanElement;
     let instructionBoard: HTMLSpanElement;
 
+    let goalsA: number = 0;
+    let goalsB: number = 0;
     let minimumSpeed: number = 1;
     let maximumSpeed: number = 6;
     let minimumPrecision: number = 0;
     let maximumPrecision: number = 5;
     let teamAColor: string = "66b2ff";
     let teamBColor: string = "ff3333";
-    let goalsA: number = 0;
-    let goalsB: number = 0;
     let animationInterval: number;
+    let listenToMouseMove: boolean = false;
     let field: Playingfield;
     let draggedPlayer: Player | undefined;
-    //let playerAtMousePosition: Player | undefined;
-    export let ball: Ball;
-    export let playerAtBall: Player | null;
-    export let animation: boolean = false;
-    let listenToMouseMove: boolean = false;
 
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
@@ -35,6 +35,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         y: number;
         team: string;
     }
+
     let playerInformation: PlayerInformation[] = [
         // Team A
         { x: 135, y: 275, team: "A" },
@@ -77,8 +78,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         { x: 975, y: 425, team: "B" }
     ];
     let moveables: Moveable[] = [];
-    let allPlayers: Player[] = [];
-    //let sparePlayers: Player[] = [];
+    let allPlayer: Player[] = [];
 
     window.addEventListener("load", handleLoad);
 
@@ -95,7 +95,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton = <HTMLSpanElement>document.querySelector("span#restart");
         pausebutton = <HTMLSpanElement>document.querySelector("span#pause");
         instructionbutton = <HTMLSpanElement>document.querySelector("span#instruction");
-        instructionBoard = <HTMLSpanElement>document.querySelector("#instructionBoard");
+        instructionBoard = <HTMLSpanElement>document.querySelector("span#instructionBoard");
 
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
@@ -138,7 +138,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         animationInterval = window.setInterval(function (): void {
             if (animation == true)
                 animationUpdate();
-        }, 20);
+        },                                     20);
 
         console.log("Simulation started.");
     }
@@ -158,7 +158,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     //Show and hide simulation instructions
     function showInstruction(): void {
-        
         if (instructionBoard.classList.contains("is-hidden")) {
             instructionBoard.classList.remove("is-hidden");
             instructionBoard.classList.add("visible");
@@ -166,7 +165,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             instructionBoard.classList.remove("visible");
             instructionBoard.classList.add("is-hidden");
         }
-
     }
 
     function getUserPreferences(): void {
@@ -210,7 +208,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             // bekommen noch Geschwindigkeit und Präzision
 
             //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
-            allPlayers.push(player);
+            allPlayer.push(player);
             moveables.push(player);
         }
     }
@@ -330,7 +328,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     // den geklickten Spieler bekommen
     function getPlayerClick(_clickPosition: Vector): Player | null {
 
-        for (let player of allPlayers) {
+        for (let player of allPlayer) {
             if (player.isClicked(_clickPosition) && player != draggedPlayer) //funktion mehr funktion als vorher gedacht?
                 return player;
         }
@@ -367,7 +365,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             moveable.draw();
         }
 
-        for (let player of allPlayers) {
+        for (let player of allPlayer) {
             player.checkState();
         }
     }
@@ -387,11 +385,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //empty arrays of current objects in the simulation
         moveables = [];
-        allPlayers = [];
+        allPlayer = [];
 
         //animationsintervall beenden
         window.clearInterval(animationInterval);
-
     }
 
 } //close namespace

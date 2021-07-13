@@ -1,25 +1,25 @@
 "use strict";
 var EIA2_Endaufgabe_HannahDuerr;
 (function (EIA2_Endaufgabe_HannahDuerr) {
+    EIA2_Endaufgabe_HannahDuerr.animation = false;
     let landingPage;
     let startbutton;
     let restartbutton;
     let pausebutton;
     let instructionbutton;
     let instructionBoard;
+    let goalsA = 0;
+    let goalsB = 0;
     let minimumSpeed = 1;
     let maximumSpeed = 6;
     let minimumPrecision = 0;
     let maximumPrecision = 5;
     let teamAColor = "66b2ff";
     let teamBColor = "ff3333";
-    let goalsA = 0;
-    let goalsB = 0;
     let animationInterval;
+    let listenToMouseMove = false;
     let field;
     let draggedPlayer;
-    EIA2_Endaufgabe_HannahDuerr.animation = false;
-    let listenToMouseMove = false;
     let SOCCER_EVENT;
     (function (SOCCER_EVENT) {
         SOCCER_EVENT["RIGHTGOAL_HIT"] = "rightGoalHit";
@@ -64,8 +64,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         { x: 975, y: 425, team: "B" }
     ];
     let moveables = [];
-    let allPlayers = [];
-    //let sparePlayers: Player[] = [];
+    let allPlayer = [];
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         //get the canvas and the rendering context
@@ -79,7 +78,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton = document.querySelector("span#restart");
         pausebutton = document.querySelector("span#pause");
         instructionbutton = document.querySelector("span#instruction");
-        instructionBoard = document.querySelector("#instructionBoard");
+        instructionBoard = document.querySelector("span#instructionBoard");
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         pausebutton.addEventListener("click", pauseSimulation);
@@ -173,7 +172,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             const player = new EIA2_Endaufgabe_HannahDuerr.Player(position, startPosition, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
             // bekommen noch Geschwindigkeit und Präzision
             //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
-            allPlayers.push(player);
+            allPlayer.push(player);
             moveables.push(player);
         }
     }
@@ -275,7 +274,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     // den geklickten Spieler bekommen
     function getPlayerClick(_clickPosition) {
-        for (let player of allPlayers) {
+        for (let player of allPlayer) {
             if (player.isClicked(_clickPosition) && player != draggedPlayer) //funktion mehr funktion als vorher gedacht?
                 return player;
         }
@@ -305,7 +304,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         for (let moveable of moveables) {
             moveable.draw();
         }
-        for (let player of allPlayers) {
+        for (let player of allPlayer) {
             player.checkState();
         }
     }
@@ -322,7 +321,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         teamBColor = "ff3333";
         //empty arrays of current objects in the simulation
         moveables = [];
-        allPlayers = [];
+        allPlayer = [];
         //animationsintervall beenden
         window.clearInterval(animationInterval);
     }

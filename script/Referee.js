@@ -4,7 +4,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     class Referee extends EIA2_Endaufgabe_HannahDuerr.Moveable {
         constructor(_position) {
             super(_position);
-            this.radius = 15;
+            this.radius = 14;
             this.perceptionRadius = 400;
         }
         draw() {
@@ -14,7 +14,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "white";
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
-            EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
+            EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2.5;
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             // Streifen

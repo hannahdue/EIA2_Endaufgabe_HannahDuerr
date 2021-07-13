@@ -120,13 +120,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             if (this.destination) {
                 let direction: Vector = new Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
 
-                //je weiter destination vom Ball weg ist, desto ungenauer ist der Schuss
+                //je weiter destination vom Ball weg ist und desto schlechter der Spieler, desto ungenauer ist der Schuss
                 if (this.startMoving == true) {
                     let distance: number = 0;
                     
                     //präzision abhängig vom Spieler am Ball
                     if (playerAtBall)
-                        distance = playerAtBall.precision * (0.1 * direction.length);
+                        distance = (playerAtBall.precision / 2) * (0.1 * direction.length);
 
                     //console.log("Abstand: " + direction.length + ", Präszisionswert vom Klick: " + distance);
                 

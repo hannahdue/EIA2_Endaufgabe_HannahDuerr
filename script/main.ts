@@ -10,6 +10,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let restartbutton: HTMLSpanElement;
     let instructionbutton: HTMLSpanElement;
     let instructionBoard: HTMLSpanElement;
+    let playerDisplay: HTMLDivElement;
+
 
     let goalsA: number = 0;
     let goalsB: number = 0;
@@ -94,6 +96,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         restartbutton = <HTMLSpanElement>document.querySelector("span#restart");
         instructionbutton = <HTMLSpanElement>document.querySelector("span#instruction");
         instructionBoard = <HTMLSpanElement>document.querySelector("span#instructionBoard");
+        playerDisplay = <HTMLDivElement>document.querySelector("div#playerInformation");
 
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
@@ -234,8 +237,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //get the position of the click and move the ball to this position
         //Mouseposition:
-        let xpos: number = 0;
-        let ypos: number = 0;
+        let xpos: number = _event.offsetX;
+        let ypos: number = _event.offsetY;
 
         if (_event.offsetX > 75 && _event.offsetX < 925) {
             xpos = _event.offsetX;
@@ -320,14 +323,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 draggedPlayer = undefined;
             }
         }
-
-
-        //draggedPlayer absetzen
-        /*if (draggedPlayer) {
-            let newX: number = draggedPlayer.position.x;
-            let newY: number = draggedPlayer.position.y;
-            draggedPlayer.startPosition = new Vector(newX, newY); //neue position auf dem Spielfeld festlegen
-        }*/
     }
 
     // den geklickten Spieler bekommen
@@ -343,7 +338,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     // Player Display
     function showPlayerInformation(_playerClicked: Player): void {
-        let playerDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#playerInformation");
         playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
 
@@ -354,9 +348,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");
-        //show the score and the player who is in possession of the ball
+        //show the score and the player who is in possession of the ball and his individual information
         if (playerAtBall) {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
+            playerDisplay.innerHTML = "<b>Number: </b>" + playerAtBall.jerseyNumber + " | <b>Speed: </b> " + Math.round(playerAtBall.speed) + " | <b>Precision: </b>" + Math.round(playerAtBall.precision);
         } else {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?";
         }

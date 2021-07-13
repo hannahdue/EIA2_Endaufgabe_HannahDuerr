@@ -7,6 +7,7 @@ var EIA2_Endaufgabe_HannahDuerr;
     let restartbutton;
     let instructionbutton;
     let instructionBoard;
+    let playerDisplay;
     let goalsA = 0;
     let goalsB = 0;
     let minimumSpeed = 1;
@@ -77,6 +78,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         restartbutton = document.querySelector("span#restart");
         instructionbutton = document.querySelector("span#instruction");
         instructionBoard = document.querySelector("span#instructionBoard");
+        playerDisplay = document.querySelector("div#playerInformation");
         startbutton.addEventListener("click", startSimulation);
         restartbutton.addEventListener("click", restartSimulation);
         instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
@@ -192,8 +194,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         EIA2_Endaufgabe_HannahDuerr.ball.hitGoalB = false;
         //get the position of the click and move the ball to this position
         //Mouseposition:
-        let xpos = 0;
-        let ypos = 0;
+        let xpos = _event.offsetX;
+        let ypos = _event.offsetY;
         if (_event.offsetX > 75 && _event.offsetX < 925) {
             xpos = _event.offsetX;
         }
@@ -267,12 +269,6 @@ var EIA2_Endaufgabe_HannahDuerr;
                 draggedPlayer = undefined;
             }
         }
-        //draggedPlayer absetzen
-        /*if (draggedPlayer) {
-            let newX: number = draggedPlayer.position.x;
-            let newY: number = draggedPlayer.position.y;
-            draggedPlayer.startPosition = new Vector(newX, newY); //neue position auf dem Spielfeld festlegen
-        }*/
     }
     // den geklickten Spieler bekommen
     function getPlayerClick(_clickPosition) {
@@ -284,7 +280,6 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     // Player Display
     function showPlayerInformation(_playerClicked) {
-        let playerDisplay = document.querySelector("div#playerInformation");
         playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
     function animationUpdate() {
@@ -293,9 +288,10 @@ var EIA2_Endaufgabe_HannahDuerr;
             moveable.move();
         }
         let scoreDisplay = document.querySelector("div#score");
-        //show the score and the player who is in possession of the ball
+        //show the score and the player who is in possession of the ball and his individual information
         if (EIA2_Endaufgabe_HannahDuerr.playerAtBall) {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + EIA2_Endaufgabe_HannahDuerr.playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
+            playerDisplay.innerHTML = "<b>Number: </b>" + EIA2_Endaufgabe_HannahDuerr.playerAtBall.jerseyNumber + " | <b>Speed: </b> " + Math.round(EIA2_Endaufgabe_HannahDuerr.playerAtBall.speed) + " | <b>Precision: </b>" + Math.round(EIA2_Endaufgabe_HannahDuerr.playerAtBall.precision);
         }
         else {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No ?";

@@ -144,8 +144,24 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function restartSimulation(): void {
-        //extra function in case we need the initialisation somewhere else
-        initialisation();
+        //show setings container again
+        landingPage.style.display = "";
+
+        //stop animation and reset values to default
+        animation = false;
+        minimumSpeed = 1;
+        maximumSpeed = 5;
+        minimumPrecision = 1;
+        maximumPrecision = 5;
+        teamAColor = "66b2ff";
+        teamBColor = "ff3333";
+
+        //empty arrays of current objects in the simulation
+        moveables = [];
+        allPlayer = [];
+
+        //animationsintervall beenden
+        window.clearInterval(animationInterval);
     }
 
     function pauseSimulation(): void {
@@ -346,11 +362,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //update animation
         for (let moveable of moveables) {
             moveable.move();
-            //moveable.draw();
         }
 
         let scoreDisplay: HTMLDivElement = <HTMLDivElement>document.querySelector("div#score");
-
+        //show the score and the player who is in possession of the ball
         if (playerAtBall) {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
         } else {
@@ -368,27 +383,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         for (let player of allPlayer) {
             player.checkState();
         }
-    }
-
-    function initialisation(): void {
-        //show setings container again
-        landingPage.style.display = "";
-
-        //stop animation and reset values to default
-        animation = false;
-        minimumSpeed = 1;
-        maximumSpeed = 5;
-        minimumPrecision = 1;
-        maximumPrecision = 5;
-        teamAColor = "66b2ff";
-        teamBColor = "ff3333";
-
-        //empty arrays of current objects in the simulation
-        moveables = [];
-        allPlayer = [];
-
-        //animationsintervall beenden
-        window.clearInterval(animationInterval);
     }
 
 } //close namespace

@@ -116,8 +116,21 @@ var EIA2_Endaufgabe_HannahDuerr;
         console.log("Simulation started.");
     }
     function restartSimulation() {
-        //extra function in case we need the initialisation somewhere else
-        initialisation();
+        //show setings container again
+        landingPage.style.display = "";
+        //stop animation and reset values to default
+        EIA2_Endaufgabe_HannahDuerr.animation = false;
+        minimumSpeed = 1;
+        maximumSpeed = 5;
+        minimumPrecision = 1;
+        maximumPrecision = 5;
+        teamAColor = "66b2ff";
+        teamBColor = "ff3333";
+        //empty arrays of current objects in the simulation
+        moveables = [];
+        allPlayer = [];
+        //animationsintervall beenden
+        window.clearInterval(animationInterval);
     }
     function pauseSimulation() {
         if (EIA2_Endaufgabe_HannahDuerr.animation == true) {
@@ -289,9 +302,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         //update animation
         for (let moveable of moveables) {
             moveable.move();
-            //moveable.draw();
         }
         let scoreDisplay = document.querySelector("div#score");
+        //show the score and the player who is in possession of the ball
         if (EIA2_Endaufgabe_HannahDuerr.playerAtBall) {
             scoreDisplay.innerHTML = "<b>Score </b>" + goalsA + " : " + goalsB + " | <b>In possesion of the ball: </b>Player No " + EIA2_Endaufgabe_HannahDuerr.playerAtBall.jerseyNumber; //add jerseyNumber of player in possesion of the ball 
         }
@@ -307,23 +320,6 @@ var EIA2_Endaufgabe_HannahDuerr;
         for (let player of allPlayer) {
             player.checkState();
         }
-    }
-    function initialisation() {
-        //show setings container again
-        landingPage.style.display = "";
-        //stop animation and reset values to default
-        EIA2_Endaufgabe_HannahDuerr.animation = false;
-        minimumSpeed = 1;
-        maximumSpeed = 5;
-        minimumPrecision = 1;
-        maximumPrecision = 5;
-        teamAColor = "66b2ff";
-        teamBColor = "ff3333";
-        //empty arrays of current objects in the simulation
-        moveables = [];
-        allPlayer = [];
-        //animationsintervall beenden
-        window.clearInterval(animationInterval);
     }
 })(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {})); //close namespace
 //# sourceMappingURL=main.js.map

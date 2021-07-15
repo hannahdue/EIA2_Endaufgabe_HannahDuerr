@@ -194,8 +194,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         EIA2_Endaufgabe_HannahDuerr.ball.hitGoalB = false;
         //get the position of the click and move the ball to this position
         //Mouseposition:
-        let xpos = _event.offsetX;
-        let ypos = _event.offsetY;
+        let xpos = 0;
+        let ypos = 0;
         if (_event.offsetX > 75 && _event.offsetX < 925) {
             xpos = _event.offsetX;
         }
@@ -221,7 +221,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         // Aktuelle Mouseposition
         let clickPosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Klickposition
-        let playerClicked = getPlayerClick(clickPosition);
+        let playerClicked = getPlayerAtMousePosition(clickPosition);
         // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
         if (playerClicked) {
             if (_event.shiftKey) {
@@ -248,10 +248,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         // Aktuelle Mouseposition
         let mousePosition = new EIA2_Endaufgabe_HannahDuerr.Vector(_event.offsetX, _event.offsetY);
         // getPlayerClick von der aktuellen Mausposition
-        let playerAtMousePosition = getPlayerClick(mousePosition);
+        let playerAtMousePosition = getPlayerAtMousePosition(mousePosition);
         if (playerAtMousePosition && draggedPlayer) {
-            //console.log("Player at Mouseposition: " + playerAtMousePosition.jerseyNumber);
-            //console.log("Dragged Player: " + draggedPlayer.jerseyNumber);
             //switch only if player are from the same team
             if (draggedPlayer.team == playerAtMousePosition.team) {
                 //save startpositions of player to be exchanged
@@ -271,7 +269,7 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
     }
     // den geklickten Spieler bekommen
-    function getPlayerClick(_clickPosition) {
+    function getPlayerAtMousePosition(_clickPosition) {
         for (let player of allPlayer) {
             if (player.isClicked(_clickPosition) && player != draggedPlayer) //funktion mehr funktion als vorher gedacht?
                 return player;

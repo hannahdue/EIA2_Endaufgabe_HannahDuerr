@@ -104,9 +104,9 @@ var EIA2_Endaufgabe_HannahDuerr;
             //wenn eine destination gesetzt wurde, ball dorthin bewegen
             if (this.destination) {
                 let direction = new EIA2_Endaufgabe_HannahDuerr.Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
+                let distance = 0;
                 //je weiter destination vom Ball weg ist und desto schlechter der Spieler, desto ungenauer ist der Schuss
                 if (this.startMoving == true) {
-                    let distance = 0;
                     //präzision abhängig vom Spieler am Ball
                     if (EIA2_Endaufgabe_HannahDuerr.playerAtBall)
                         distance = (EIA2_Endaufgabe_HannahDuerr.playerAtBall.precision / 2) * (0.1 * direction.length);
@@ -117,8 +117,14 @@ var EIA2_Endaufgabe_HannahDuerr;
                     this.destination.y += distance;
                     this.startMoving = false;
                 }
+                //move ball faster when shot is on very short distance
                 direction.scale(1 / 50);
-                this.position.add(direction);
+                if (distance < 150) {
+                    this.position.add(new EIA2_Endaufgabe_HannahDuerr.Vector(direction.x * 2, direction.y * 2));
+                }
+                else {
+                    this.position.add(direction);
+                }
                 // wenn der aus dem Spielfeld rausrollt, wird er automatisch zurück in die Mitte gesetzt:
                 if (this.position.x < 98 || this.position.x > 902 || this.position.y < 25 || this.position.y > 525) {
                     this.position = new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275);

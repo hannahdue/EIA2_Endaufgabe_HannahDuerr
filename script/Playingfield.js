@@ -132,7 +132,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             //restore the first translation of the overall playing field
             EIA2_Endaufgabe_HannahDuerr.crc2.restore();
         }
-    }
+    } //class close
     EIA2_Endaufgabe_HannahDuerr.Playingfield = Playingfield;
-})(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {}));
+})(EIA2_Endaufgabe_HannahDuerr || (EIA2_Endaufgabe_HannahDuerr = {})); //namespace close
 //# sourceMappingURL=Playingfield.js.map

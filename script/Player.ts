@@ -76,7 +76,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                             playerAtBall = this;
                             this.active = false; //damit er nicht zum Ball rennen kann, wenn er grade geschossen hat
                             setTimeout(() => {
-                                this.toggleActivity();
+                                this.activate();
                             },         3000);
                         }
                     } else if (distanceToStartposition > 5) {
@@ -106,7 +106,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         //damit er nach 3s wieder auf den Ball zugreifen kann
-        private toggleActivity(): void {
+        private activate(): void {
             this.active = true;
         }
     }

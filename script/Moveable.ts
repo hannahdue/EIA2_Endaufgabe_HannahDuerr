@@ -7,8 +7,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             this.position = _position;
         }
 
-        abstract move(): void;
+        public abstract move(): void;
 
-        abstract draw(): void;
+        public abstract draw(): void;
     }
 }

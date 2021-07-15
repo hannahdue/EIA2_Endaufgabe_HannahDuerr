@@ -155,5 +155,5 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             //restore the first translation of the overall playing field
             crc2.restore();
         }
-    }
-}
+    } //class close
+} //namespace close

@@ -61,7 +61,7 @@ var EIA2_Endaufgabe_HannahDuerr;
                             EIA2_Endaufgabe_HannahDuerr.playerAtBall = this;
                             this.active = false; //damit er nicht zum Ball rennen kann, wenn er grade geschossen hat
                             setTimeout(() => {
-                                this.toggleActivity();
+                                this.activate();
                             }, 3000);
                         }
                     }
@@ -91,7 +91,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             }
         }
         //damit er nach 3s wieder auf den Ball zugreifen kann
-        toggleActivity() {
+        activate() {
             this.active = true;
         }
     }

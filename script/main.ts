@@ -26,6 +26,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let field: Playingfield;
     let draggedPlayer: Player | undefined;
 
+    export let sound: HTMLAudioElement[] = [];
+    sound[0] = new Audio("../sounds/kickoff.mp3");
+    sound[1] = new Audio("../sounds/cheering.mp3");
+    sound[2] = new Audio("../sounds/goal.mp3");
+    sound[3] = new Audio("../sounds/kick.mp3");
+    sound[4] = new Audio("../sounds/backgroundmusic.mp3");
+
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
         LEFTGOAL_HIT = "leftGoalHit"
@@ -110,13 +117,23 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
 
+    //Funktion um random wert zwischen zwei zahlen zu erstellen
     export function randomBetween(_min: number, _max: number): number {
         return _min + Math.random() * (_max - _min);
+    }
+
+    // Funktion zum Spielen der Sounds
+    export function playSample(_sound: number): void {
+        sound[_sound].play();
     }
 
     function startSimulation(): void {
         //hide settings container
         landingPage.style.display = "none";
+
+        // Anpfiff - Sound
+        playSample(0);
+        playSample(4);
 
         getUserPreferences();
 
@@ -249,6 +266,8 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
+            //Kicksound
+            playSample(3);
             //move ball
             ball.destination = new Vector(xpos, ypos);
             ball.startMoving = true;
@@ -258,10 +277,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     function handleLeftGoal(): void {
         goalsB++;
+        playSample(2); // Jubeln
     }
 
     function handleRightGoal(): void {
         goalsA++;
+        playSample(2); // Jubeln
     }
 
     // Spielerinformation bekommen

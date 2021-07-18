@@ -127,7 +127,12 @@ var EIA2_Endaufgabe_HannahDuerr;
                 }
                 // wenn der aus dem Spielfeld rausrollt, wird er automatisch zurück in die Mitte gesetzt:
                 if (this.position.x < 98 || this.position.x > 902 || this.position.y < 25 || this.position.y > 525) {
+                    this.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275); // sonst ist Destination noch beim letzten Klick
                     this.position = new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275);
+                }
+                // Sound Jubeln
+                if (this.position.x < 180 && this.position.x > 170 || this.position.x > 820 && this.position.x < 830) {
+                    EIA2_Endaufgabe_HannahDuerr.playSample(1);
                 }
                 this.checkGoals();
             }

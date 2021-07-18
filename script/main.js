@@ -20,6 +20,12 @@ var EIA2_Endaufgabe_HannahDuerr;
     let listenToMouseMove = false;
     let field;
     let draggedPlayer;
+    EIA2_Endaufgabe_HannahDuerr.sound = [];
+    EIA2_Endaufgabe_HannahDuerr.sound[0] = new Audio("../sounds/kickoff.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[1] = new Audio("../sounds/cheering.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[2] = new Audio("../sounds/goal.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[3] = new Audio("../sounds/kick.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[4] = new Audio("../sounds/backgroundmusic.mp3");
     let SOCCER_EVENT;
     (function (SOCCER_EVENT) {
         SOCCER_EVENT["RIGHTGOAL_HIT"] = "rightGoalHit";
@@ -88,13 +94,22 @@ var EIA2_Endaufgabe_HannahDuerr;
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
         EIA2_Endaufgabe_HannahDuerr.crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
+    //Funktion um random wert zwischen zwei zahlen zu erstellen
     function randomBetween(_min, _max) {
         return _min + Math.random() * (_max - _min);
     }
     EIA2_Endaufgabe_HannahDuerr.randomBetween = randomBetween;
+    // Funktion zum Spielen der Sounds
+    function playSample(_sound) {
+        EIA2_Endaufgabe_HannahDuerr.sound[_sound].play();
+    }
+    EIA2_Endaufgabe_HannahDuerr.playSample = playSample;
     function startSimulation() {
         //hide settings container
         landingPage.style.display = "none";
+        // Anpfiff - Sound
+        playSample(0);
+        playSample(4);
         getUserPreferences();
         //create the background and the ball
         field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
@@ -204,6 +219,8 @@ var EIA2_Endaufgabe_HannahDuerr;
         }
         //wenn position gesetzt wurde, dem ball als ziel mitgeben:
         if (xpos > 0 && ypos > 0) {
+            //Kicksound
+            playSample(3);
             //move ball
             EIA2_Endaufgabe_HannahDuerr.ball.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(xpos, ypos);
             EIA2_Endaufgabe_HannahDuerr.ball.startMoving = true;
@@ -212,9 +229,11 @@ var EIA2_Endaufgabe_HannahDuerr;
     }
     function handleLeftGoal() {
         goalsB++;
+        playSample(2); // Jubeln
     }
     function handleRightGoal() {
         goalsA++;
+        playSample(2); // Jubeln
     }
     // Spielerinformation bekommen
     function getPlayer(_event) {

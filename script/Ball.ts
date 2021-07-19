@@ -12,7 +12,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         public draw(): void {
-            // draw ball center
+            //draw ball center
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
             crc2.fillStyle = "white";
@@ -21,7 +21,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Zweiter Kreis
+            //draw ball pattern
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, this.radius - 2.5, 0, 2 * Math.PI, false);
             crc2.fillStyle = "white";
@@ -30,37 +30,37 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Strich oben
+            //line top
             crc2.beginPath();
             crc2.moveTo(this.position.x, this.position.y - 10);
             crc2.lineTo(this.position.x, this.position.y - 2);
             crc2.stroke();
 
-            // Linker Strich unten
+            //line bottom
             crc2.beginPath();
             crc2.moveTo(this.position.x, this.position.y);
             crc2.lineTo(this.position.x - 6, this.position.y + 8);
             crc2.stroke();
 
-            // Linker Strich oben
+            //line left top
             crc2.beginPath();
             crc2.moveTo(this.position.x, this.position.y);
             crc2.lineTo(this.position.x - 9, this.position.y - 3);
             crc2.stroke();
 
-            // Rechter Strich oben
+            //line right top
             crc2.beginPath();
             crc2.moveTo(this.position.x, this.position.y);
             crc2.lineTo(this.position.x + 9, this.position.y - 3);
             crc2.stroke();
 
-            // Rechter Strich unten
+            //line right bottom
             crc2.beginPath();
             crc2.moveTo(this.position.x, this.position.y - 1);
             crc2.lineTo(this.position.x + 6, this.position.y + 8);
             crc2.stroke();
 
-            // Mittelpunkt
+            //dot in the middle
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 2, 0, 2 * Math.PI, false);
             crc2.fillStyle = "black";
@@ -69,7 +69,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Punkt oben
+            //dot on top
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y - 8, 1.7, 0, 2 * Math.PI, false);
             crc2.fillStyle = "black";
@@ -78,7 +78,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Linker Punkt oben
+            //dot on top left
             crc2.beginPath();
             crc2.arc(this.position.x - 8, this.position.y - 2, 1.7, 0, 2 * Math.PI, false);
             crc2.fillStyle = "black";
@@ -87,7 +87,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Rechter Punkt oben
+            //dot on top right
             crc2.beginPath();
             crc2.arc(this.position.x + 8, this.position.y - 2, 1.7, 0, 2 * Math.PI, false);
             crc2.fillStyle = "black";
@@ -96,7 +96,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Rechter Punkt unten
+            //dot on bottom right
             crc2.beginPath();
             crc2.arc(this.position.x + 5, this.position.y + 7, 1.7, 0, 2 * Math.PI, false);
             crc2.fillStyle = "black";
@@ -105,7 +105,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
-            // Linker Punkt unten
+            //dot on bottom left
             crc2.beginPath();
             crc2.arc(this.position.x - 5, this.position.y + 7, 1.7, 0, 2 * Math.PI, false);
             crc2.fillStyle = "black";
@@ -116,20 +116,18 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         public move(): void {
-            //wenn eine destination gesetzt wurde, ball dorthin bewegen
+            //when a destination was set, move ball there
             if (this.destination) {
                 let direction: Vector = new Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
                 let distance: number = 0;
-                //je weiter destination vom Ball weg ist und desto schlechter der Spieler, desto ungenauer ist der Schuss
+                //the further the destination is from the ball and the the worse the player who kicked, the less precise is the shot
                 if (this.startMoving == true) {
                     
-                    //präzision abhängig vom Spieler am Ball
+                    //precision depeding on player at ball
                     if (playerAtBall)
                         distance = (playerAtBall.precision / 2) * (0.1 * direction.length);
-
-                    //console.log("Abstand: " + direction.length + ", Präszisionswert vom Klick: " + distance);
                 
-                    //präzision abhängig von der Distanz des Klicks zum Ball
+                    //precision depeding on distance between ball and click
                     distance += (Math.random() - 0.5) * (0.25 * direction.length);
 
                     this.destination.x += distance;
@@ -145,13 +143,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                     this.position.add(direction);
                 }
 
-                // wenn der aus dem Spielfeld rausrollt, wird er automatisch zurück in die Mitte gesetzt:
+                //when ball leaves the playing field, it is placed back in the middle of the field
                 if (this.position.x < 98 || this.position.x > 902 || this.position.y < 25 || this.position.y > 525) {
-                    this.destination = new Vector(500, 275); // sonst ist Destination noch beim letzten Klick
+                    this.destination = new Vector(500, 275); //otherwise it will shoot again to the place off the field
                     this.position = new Vector(500, 275);
                 }
 
-                // Sound Jubeln
+                //let people cheer if ball gets near the goals
                 if (this.position.x < 180 && this.position.x > 170 || this.position.x > 820 && this.position.x < 830) {
                     playSample(1);
                 }

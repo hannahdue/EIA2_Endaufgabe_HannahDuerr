@@ -32,55 +32,44 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "black";
             crc2.stroke();
 
+            //write his jersey number on the player
             crc2.textBaseline = "middle";
             crc2.textAlign = "center";                
             crc2.fillStyle = "black";
             crc2.fillText(this.jerseyNumber.toString(), this.position.x, this.position.y);
-
-            //Perception radius anzeigen lassen zum testen
-            /*crc2.beginPath();
-            crc2.arc(this.position.x, this.position.y, this.perceptionRadius, 0, 2 * Math.PI, false);
-            crc2.lineWidth = 1;
-            crc2.strokeStyle = "#6D6D6D";
-            crc2.stroke();*/
         }
 
         public move(): void {
-            //move
-            //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
-            //nur Spieler bewegen, die auf dem Spielfeld sind
+            //move player only if he has a perception radius and tehrefore is a field player
             if (this.perceptionRadius > 0) {
-                //nur aktiv bewegen, wenn er nicht gerade geschossen hat
-                if (this.active == true) { //--> needed to shoot ball away from player easily, caused problems
+                //just let him move if he didn't just shoot to prevent the ball from "sticking" to him
+                if (this.active == true) {
 
-                    //1. Distanz zum Ball ausrechnen
+                    //calculate distance to ball and to startposition
                     let vectorToBall: Vector = new Vector(ball.position.x - this.position.x, ball.position.y - this.position.y); //differenzvektor
-                    let distanceToBall: number = vectorToBall.length; //länge des differenzvektors
+                    let distanceToBall: number = vectorToBall.length;
 
                     let vectorToStartposition: Vector = new Vector(this.startPosition.x - this.position.x, this.startPosition.y - this.position.y); //differenzvektor
-                    let distanceToStartposition: number = vectorToStartposition.length; //länge des differenzvektors
+                    let distanceToStartposition: number = vectorToStartposition.length;
 
-                    //2. Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Spielers
+                    //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
                     if (distanceToBall < this.perceptionRadius && distanceToBall > 24) {
-                        //move towards ball
-                        //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
-                        //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
+                        //move towards ball in even speed
                         let scale: number = (1 + this.speed * 0.2) / distanceToBall;
                         vectorToBall.scale(scale);
                         this.position.add(vectorToBall);
 
-                        //if difference between ball and player is smaller than 25, animation = false
-                        //wenn spieler am Ball ankommt, stoppt animation
+                        //if player arrived at the ball, stop the animation
                         if (distanceToBall > 24 && distanceToBall < 26) {
                             animation = false;
                             playerAtBall = this;
-                            this.active = false; //damit er nicht zum Ball rennen kann, wenn er grade geschossen hat
+                            this.active = false; //deactivate player shortly when he just shot
                             setTimeout(() => {
                                 this.activate();
                             },         3000);
                         }
-                    } else if (distanceToStartposition > 5) {
-                        //spieler läuft zurück zu seiner startposition
+                    } else if (distanceToStartposition > 5) { //something bigger than 0 to prevent player from shivering weirdly
+                        //player returns to its startposition
                         let scale: number = (1 + this.speed * 0.2) / distanceToStartposition;
                         vectorToStartposition.scale(scale);
                         this.position.add(vectorToStartposition);
@@ -89,23 +78,25 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             } //close first if condition
         }
 
-        // Schauen, ob Player angeklickt wurde:
+        //check if a player has been clicked by calculating the difference of the click and the position of the player
         public isClicked(_clickPosition: Vector): Boolean {
             let difference: Vector = new Vector(_clickPosition.x - this.position.x, _clickPosition.y - this.position.y);
+            //return true when the click overlapped with the player
             return (difference.length < this.radius);
         }
 
         public checkState(): void {
+            //if players startposition is not on the playing field, he has no erception radius and therefore doesn't react to the ball
             if (this.position.x < 75 || this.position.x > 925) {
                 this.perceptionRadius = 0;
             } else if (this.startPosition.x < 75 || this.startPosition.x > 925) {
                 this.perceptionRadius = 0;
             } else {
+                //if he is on the field, he has a perception radius and therefore plays actively
                 this.perceptionRadius = 160;
             }
         }
 
-        //damit er nach 3s wieder auf den Ball zugreifen kann
         private activate(): void {
             this.active = true;
         }

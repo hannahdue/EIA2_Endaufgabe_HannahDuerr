@@ -19,7 +19,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.fill();
             crc2.stroke();
 
-            // Streifen
+            //draw stripes
             crc2.beginPath();
             crc2.moveTo(this.position.x - 13, this.position.y + 6);
             crc2.lineTo(this.position.x + 13, this.position.y - 6);
@@ -52,15 +52,13 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
 
         move(): void {
-
+            //always run behind the ball but keep a certain distance
             let vectorToBall: Vector = new Vector(ball.position.x - this.position.x, ball.position.y - this.position.y); //differenzvektor
-            let distanceToBall: number = vectorToBall.length; //länge des differenzvektors
+            let distanceToBall: number = vectorToBall.length;
 
-            // Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Schiedsrichters und sicherstellen, dass Schiedsrichter nicht an den Ball rankommt
+            //check distance between ball and referee and don't let him run to close to it
             if (distanceToBall < this.perceptionRadius && distanceToBall > 100) {
-                //move towards ball
-                //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
-                //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
+                //move towards ball evenly just like player
                 let scale: number = 1 / distanceToBall;
                 vectorToBall.scale(scale);
                 this.position.add(vectorToBall);

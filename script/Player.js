@@ -23,50 +23,40 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
+            //write his jersey number on the player
             EIA2_Endaufgabe_HannahDuerr.crc2.textBaseline = "middle";
             EIA2_Endaufgabe_HannahDuerr.crc2.textAlign = "center";
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.fillText(this.jerseyNumber.toString(), this.position.x, this.position.y);
-            //Perception radius anzeigen lassen zum testen
-            /*crc2.beginPath();
-            crc2.arc(this.position.x, this.position.y, this.perceptionRadius, 0, 2 * Math.PI, false);
-            crc2.lineWidth = 1;
-            crc2.strokeStyle = "#6D6D6D";
-            crc2.stroke();*/
         }
         move() {
-            //move
-            //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
-            //nur Spieler bewegen, die auf dem Spielfeld sind
+            //move player only if he has a perception radius and tehrefore is a field player
             if (this.perceptionRadius > 0) {
-                //nur aktiv bewegen, wenn er nicht gerade geschossen hat
-                if (this.active == true) { //--> needed to shoot ball away from player easily, caused problems
-                    //1. Distanz zum Ball ausrechnen
+                //just let him move if he didn't just shoot to prevent the ball from "sticking" to him
+                if (this.active == true) {
+                    //calculate distance to ball and to startposition
                     let vectorToBall = new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.ball.position.x - this.position.x, EIA2_Endaufgabe_HannahDuerr.ball.position.y - this.position.y); //differenzvektor
-                    let distanceToBall = vectorToBall.length; //länge des differenzvektors
+                    let distanceToBall = vectorToBall.length;
                     let vectorToStartposition = new EIA2_Endaufgabe_HannahDuerr.Vector(this.startPosition.x - this.position.x, this.startPosition.y - this.position.y); //differenzvektor
-                    let distanceToStartposition = vectorToStartposition.length; //länge des differenzvektors
-                    //2. Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Spielers
+                    let distanceToStartposition = vectorToStartposition.length;
+                    //check if ball is in his perception radius (difference between player position and ball position smaller than perception radius)
                     if (distanceToBall < this.perceptionRadius && distanceToBall > 24) {
-                        //move towards ball
-                        //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
-                        //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
+                        //move towards ball in even speed
                         let scale = (1 + this.speed * 0.2) / distanceToBall;
                         vectorToBall.scale(scale);
                         this.position.add(vectorToBall);
-                        //if difference between ball and player is smaller than 25, animation = false
-                        //wenn spieler am Ball ankommt, stoppt animation
+                        //if player arrived at the ball, stop the animation
                         if (distanceToBall > 24 && distanceToBall < 26) {
                             EIA2_Endaufgabe_HannahDuerr.animation = false;
                             EIA2_Endaufgabe_HannahDuerr.playerAtBall = this;
-                            this.active = false; //damit er nicht zum Ball rennen kann, wenn er grade geschossen hat
+                            this.active = false; //deactivate player shortly when he just shot
                             setTimeout(() => {
                                 this.activate();
                             }, 3000);
                         }
                     }
-                    else if (distanceToStartposition > 5) {
-                        //spieler läuft zurück zu seiner startposition
+                    else if (distanceToStartposition > 5) { //something bigger than 0 to prevent player from shivering weirdly
+                        //player returns to its startposition
                         let scale = (1 + this.speed * 0.2) / distanceToStartposition;
                         vectorToStartposition.scale(scale);
                         this.position.add(vectorToStartposition);
@@ -74,12 +64,14 @@ var EIA2_Endaufgabe_HannahDuerr;
                 } //close second if condition
             } //close first if condition
         }
-        // Schauen, ob Player angeklickt wurde:
+        //check if a player has been clicked by calculating the difference of the click and the position of the player
         isClicked(_clickPosition) {
             let difference = new EIA2_Endaufgabe_HannahDuerr.Vector(_clickPosition.x - this.position.x, _clickPosition.y - this.position.y);
+            //return true when the click overlapped with the player
             return (difference.length < this.radius);
         }
         checkState() {
+            //if players startposition is not on the playing field, he has no erception radius and therefore doesn't react to the ball
             if (this.position.x < 75 || this.position.x > 925) {
                 this.perceptionRadius = 0;
             }
@@ -87,10 +79,10 @@ var EIA2_Endaufgabe_HannahDuerr;
                 this.perceptionRadius = 0;
             }
             else {
+                //if he is on the field, he has a perception radius and therefore plays actively
                 this.perceptionRadius = 160;
             }
         }
-        //damit er nach 3s wieder auf den Ball zugreifen kann
         activate() {
             this.active = true;
         }

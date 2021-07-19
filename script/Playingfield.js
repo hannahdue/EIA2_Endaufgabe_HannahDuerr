@@ -27,41 +27,41 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.fillRect(400, 0, 100, 500);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillRect(600, 0, 100, 500);
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Außenlinie
+            //outer border
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "#FFF";
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.rect(0, 0, 800, 500);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Mittellinie
+            //middle line
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(800 / 2, 0);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(800 / 2, 500);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Mittelkreis
+            //middle circle
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(800 / 2, 500 / 2, 70, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Mittelpunkt
+            //middle point
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "#FFF";
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(800 / 2, 500 / 2, 4, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Strafraum links
+            //penalty box left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.rect(0, (500 - 320) / 2, 130, 320);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Torbox links
+            //goal box left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.rect(0, (500 - 145) / 2, 45, 145);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Tor links
+            //goal left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(1, (500 / 2) - 50);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(1, (500 / 2) + 50);
@@ -69,27 +69,27 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
-            //Strafraumpunkt links
+            //penalty box point left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(90, 500 / 2, 2, 0, 2 * Math.PI, true);
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Halbkreis links
+            //half circle left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(90, 500 / 2, 70, 0.29 * Math.PI, 1.71 * Math.PI, true);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Strafraum rechts
+            //penalty box right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.rect(800 - 130, (500 - 320) / 2, 130, 320);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Torbox rechts
+            //goal box right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.rect(800 - 45, (500 - 145) / 2, 45, 145);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Tor rechts 
+            //goal right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(800 - 1, (500 / 2) - 50);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(800 - 1, (500 / 2) + 50);
@@ -97,32 +97,32 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
-            //Strafraumpunkt rechts
+            //penalty box point right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(800 - 90, 500 / 2, 2, 0, 2 * Math.PI, true);
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Halbkreis rechts
+            //half circle right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(800 - 90, 500 / 2, 70, 0.71 * Math.PI, 1.29 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Ecke oben links
+            //corner top left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(0, 0, 10, 0, 0.5 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Ecke unten links
+            //corner bottom left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(0, 500, 10, 1.5 * Math.PI, 0, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Ecke oben rechts
+            //corner top right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(800, 0, 10, 0.5 * Math.PI, 1 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
             EIA2_Endaufgabe_HannahDuerr.crc2.closePath();
-            //Ecke unten rechts
+            //corner bottom right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(800, 500, 10, 1 * Math.PI, 1.5 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();

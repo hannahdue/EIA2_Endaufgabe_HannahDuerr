@@ -18,7 +18,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             crc2.strokeStyle = "red";
             crc2.stroke();
 
-            //Muster
+            //pattern
             crc2.beginPath();
             crc2.arc(this.position.x, this.position.y, 2, 0, 2 * Math.PI, false);
             crc2.fillStyle = "red";

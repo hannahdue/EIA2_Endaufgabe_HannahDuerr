@@ -16,7 +16,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "red";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            //Muster
+            //pattern
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, 2, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "red";

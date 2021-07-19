@@ -17,7 +17,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2.5;
             EIA2_Endaufgabe_HannahDuerr.crc2.fill();
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Streifen
+            //draw stripes
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x - 13, this.position.y + 6);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 13, this.position.y - 6);
@@ -44,13 +44,12 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
         }
         move() {
+            //always run behind the ball but keep a certain distance
             let vectorToBall = new EIA2_Endaufgabe_HannahDuerr.Vector(EIA2_Endaufgabe_HannahDuerr.ball.position.x - this.position.x, EIA2_Endaufgabe_HannahDuerr.ball.position.y - this.position.y); //differenzvektor
-            let distanceToBall = vectorToBall.length; //länge des differenzvektors
-            // Checken, ob Distanz kleiner ist als der Wahnehmungsradius des Schiedsrichters und sicherstellen, dass Schiedsrichter nicht an den Ball rankommt
+            let distanceToBall = vectorToBall.length;
+            //check distance between ball and referee and don't let him run to close to it
             if (distanceToBall < this.perceptionRadius && distanceToBall > 100) {
-                //move towards ball
-                //gleichmäßig bewegen: wie muss der faktor sein, mit dem direction skaliert wird, damit die länge von direction speed entspricht?
-                //speed / direction.length = skalierungsfaktor. Speed wäre 1px --> 50px/sekunde
+                //move towards ball evenly just like player
                 let scale = 1 / distanceToBall;
                 vectorToBall.scale(scale);
                 this.position.add(vectorToBall);

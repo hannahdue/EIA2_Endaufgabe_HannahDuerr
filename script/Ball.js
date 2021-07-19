@@ -10,7 +10,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             this.radius = 10;
         }
         draw() {
-            // draw ball center
+            //draw ball center
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "white";
@@ -18,7 +18,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Zweiter Kreis
+            //draw ball pattern
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, this.radius - 2.5, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "white";
@@ -26,32 +26,32 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Strich oben
+            //line top
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x, this.position.y - 10);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x, this.position.y - 2);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Linker Strich unten
+            //line bottom
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x, this.position.y);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x - 6, this.position.y + 8);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Linker Strich oben
+            //line left top
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x, this.position.y);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x - 9, this.position.y - 3);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Rechter Strich oben
+            //line right top
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x, this.position.y);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 9, this.position.y - 3);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Rechter Strich unten
+            //line right bottom
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.moveTo(this.position.x, this.position.y - 1);
             EIA2_Endaufgabe_HannahDuerr.crc2.lineTo(this.position.x + 6, this.position.y + 8);
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Mittelpunkt
+            //dot in the middle
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y, 2, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
@@ -59,7 +59,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 2;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Punkt oben
+            //dot on top
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x, this.position.y - 8, 1.7, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
@@ -67,7 +67,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Linker Punkt oben
+            //dot on top left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x - 8, this.position.y - 2, 1.7, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
@@ -75,7 +75,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Rechter Punkt oben
+            //dot on top right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x + 8, this.position.y - 2, 1.7, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
@@ -83,7 +83,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Rechter Punkt unten
+            //dot on bottom right
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x + 5, this.position.y + 7, 1.7, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
@@ -91,7 +91,7 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.lineWidth = 1;
             EIA2_Endaufgabe_HannahDuerr.crc2.strokeStyle = "black";
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
-            // Linker Punkt unten
+            //dot on bottom left
             EIA2_Endaufgabe_HannahDuerr.crc2.beginPath();
             EIA2_Endaufgabe_HannahDuerr.crc2.arc(this.position.x - 5, this.position.y + 7, 1.7, 0, 2 * Math.PI, false);
             EIA2_Endaufgabe_HannahDuerr.crc2.fillStyle = "black";
@@ -101,17 +101,16 @@ var EIA2_Endaufgabe_HannahDuerr;
             EIA2_Endaufgabe_HannahDuerr.crc2.stroke();
         }
         move() {
-            //wenn eine destination gesetzt wurde, ball dorthin bewegen
+            //when a destination was set, move ball there
             if (this.destination) {
                 let direction = new EIA2_Endaufgabe_HannahDuerr.Vector(this.destination.x - this.position.x, this.destination.y - this.position.y);
                 let distance = 0;
-                //je weiter destination vom Ball weg ist und desto schlechter der Spieler, desto ungenauer ist der Schuss
+                //the further the destination is from the ball and the the worse the player who kicked, the less precise is the shot
                 if (this.startMoving == true) {
-                    //präzision abhängig vom Spieler am Ball
+                    //precision depeding on player at ball
                     if (EIA2_Endaufgabe_HannahDuerr.playerAtBall)
                         distance = (EIA2_Endaufgabe_HannahDuerr.playerAtBall.precision / 2) * (0.1 * direction.length);
-                    //console.log("Abstand: " + direction.length + ", Präszisionswert vom Klick: " + distance);
-                    //präzision abhängig von der Distanz des Klicks zum Ball
+                    //precision depeding on distance between ball and click
                     distance += (Math.random() - 0.5) * (0.25 * direction.length);
                     this.destination.x += distance;
                     this.destination.y += distance;
@@ -125,12 +124,12 @@ var EIA2_Endaufgabe_HannahDuerr;
                 else {
                     this.position.add(direction);
                 }
-                // wenn der aus dem Spielfeld rausrollt, wird er automatisch zurück in die Mitte gesetzt:
+                //when ball leaves the playing field, it is placed back in the middle of the field
                 if (this.position.x < 98 || this.position.x > 902 || this.position.y < 25 || this.position.y > 525) {
-                    this.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275); // sonst ist Destination noch beim letzten Klick
+                    this.destination = new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275); //otherwise it will shoot again to the place off the field
                     this.position = new EIA2_Endaufgabe_HannahDuerr.Vector(500, 275);
                 }
-                // Sound Jubeln
+                //let people cheer if ball gets near the goals
                 if (this.position.x < 180 && this.position.x > 170 || this.position.x > 820 && this.position.x < 830) {
                     EIA2_Endaufgabe_HannahDuerr.playSample(1);
                 }

@@ -1,5 +1,6 @@
 namespace EIA2_Endaufgabe_HannahDuerr {
 
+    //export variables that need to be accessed from classes
     export let crc2: CanvasRenderingContext2D;
     export let ball: Ball;
     export let playerAtBall: Player | null;
@@ -13,6 +14,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     let goalsA: number = 0;
     let goalsB: number = 0;
+    //default values for the simulation, just in case
     let minimumSpeed: number = 1;
     let maximumSpeed: number = 6;
     let minimumPrecision: number = 0;
@@ -23,6 +25,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let field: Playingfield;
     let draggedPlayer: Player | undefined;
 
+    //array to acces the different sounds
     export let sound: HTMLAudioElement[] = [];
     sound[0] = new Audio("sounds/kickoff.mp3");
     sound[1] = new Audio("sounds/cheering.mp3");
@@ -30,6 +33,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     sound[3] = new Audio("sounds/kick.mp3");
     sound[4] = new Audio("sounds/backgroundmusic.mp3");
 
+    //save custom events in enum to prevent mistakes from typos
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",
         LEFTGOAL_HIT = "leftGoalHit"
@@ -41,8 +45,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         team: string;
     }
 
+    //information for every player to be accessed when player are created
     let playerInformation: PlayerInformation[] = [
-        // Team A
+        //field player team A
         { x: 135, y: 275, team: "A" },
         { x: 180, y: 100, team: "A" },
         { x: 820, y: 450, team: "A" },
@@ -55,7 +60,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         { x: 450, y: 275, team: "A" },
         { x: 500, y: 75, team: "A" },
 
-        // Team B
+        //field palyer team B
         { x: 500, y: 475, team: "B" },
         { x: 550, y: 275, team: "B" },
         { x: 400, y: 150, team: "B" },
@@ -68,33 +73,36 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         { x: 180, y: 450, team: "B" },
         { x: 865, y: 275, team: "B" },
 
-        // Auswechselspieler Team A
+        //spare player team A
         { x: 25, y: 125, team: "A" },
         { x: 25, y: 200, team: "A" },
         { x: 25, y: 275, team: "A" },
         { x: 25, y: 350, team: "A" },
         { x: 25, y: 425, team: "A" },
 
-        // Auswechselspieler Team B
+        //spare player team B
         { x: 975, y: 125, team: "B" },
         { x: 975, y: 200, team: "B" },
         { x: 975, y: 275, team: "B" },
         { x: 975, y: 350, team: "B" },
         { x: 975, y: 425, team: "B" }
     ];
+
     let moveables: Moveable[] = [];
     let allPlayer: Player[] = [];
 
     window.addEventListener("load", handleLoad);
 
     function handleLoad(): void {
+
+        console.log("Soccer simulation application loaded.");
         //get the canvas and the rendering context
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
         if (!canvas)
             return;
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
-        //find html elements and install listeners on buttons to toggle between settings and simulation
+        //find html elements and install listeners on buttons
         landingPage = <HTMLDivElement>document.querySelector("div#settingsContainer");
         startbutton = <HTMLDivElement>document.querySelector("div#startbutton");
         instructionbutton = <HTMLSpanElement>document.querySelector("span#instruction");
@@ -104,20 +112,22 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         startbutton.addEventListener("click", startSimulation);
         instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
 
+        //install event-listeners on canvas to be able to shoot the ball, switch players or see their details
         canvas.addEventListener("mousedown", handleCanvasClick);
         canvas.addEventListener("mousemove", dragPlayer);
         canvas.addEventListener("mouseup", switchPlayer);
 
-        crc2.canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
-        crc2.canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
+        //install event listeners for the custom events to handle the goals
+        canvas.addEventListener(SOCCER_EVENT.RIGHTGOAL_HIT, handleRightGoal);
+        canvas.addEventListener(SOCCER_EVENT.LEFTGOAL_HIT, handleLeftGoal);
     }
 
-    //Funktion um random wert zwischen zwei zahlen zu erstellen
+    //create a random number in a given range
     export function randomBetween(_min: number, _max: number): number {
         return _min + Math.random() * (_max - _min);
     }
 
-    // Funktion zum Spielen der Sounds
+    //play the sounds
     export function playSample(_sound: number): void {
         sound[_sound].play();
     }
@@ -126,19 +136,16 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //hide settings container
         landingPage.style.display = "none";
 
-        // Anpfiff - Sound
+        //play the whistle sound at kickoff
         playSample(0);
         playSample(4);
 
+        //save data from the user settings for the simulation
         getUserPreferences();
 
-        //create the background and the ball
+        //create the background
         field = new Playingfield();
-
-        console.log(moveables);
-        console.log(allPlayer);
-        console.log(animation);
-
+        
         //create people
         createPeopleOnField();
 
@@ -148,9 +155,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
         //start animation
         animation = true;
+
         //update draw methods all the time
         window.setInterval(drawUpdate, 20);
-        //animate only when animation is on
+
+        //move animated objects only when animation is on
         window.setInterval(function (): void {
             if (animation == true)
                 animationUpdate();
@@ -170,6 +179,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         }
     }
 
+    //save all the preferences from the settings page for the simulation
     function getUserPreferences(): void {
         let formData: FormData = new FormData(document.forms[0]);
 
@@ -183,43 +193,42 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function createPeopleOnField(): void {
-        //Schiedsrichter und zwei Linienmänner werden kreiert:
+        //create the referee and two linesmen and push them to moveables
         const referee: Referee = new Referee(new Vector(510, 310));
         const linesmanTop: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, 15));
         const linesmanBottom: Linesman = new Linesman(new Vector(crc2.canvas.width / 2, crc2.canvas.height - 15));
-
-        //alle in moveables pushen
         moveables.push(referee, linesmanTop, linesmanBottom);
 
-        // Spieler:
+        //create the player
         for (let i: number = 0; i < 32; i++) {
 
+            //information for the player from array
             let position: Vector = new Vector(playerInformation[i].x, playerInformation[i].y);
             let startPosition: Vector = new Vector(playerInformation[i].x, playerInformation[i].y);
-            let team: string = playerInformation[i].team; // from array;
+            let team: string = playerInformation[i].team;
             let speed: number = randomBetween(minimumSpeed, maximumSpeed);
             let precision: number = randomBetween(minimumPrecision, maximumPrecision);
             let jerseyNumber: number = i + 1;
-            let color: string = "000000"; //default value just in case
+            let color: string = "000000"; //default value just in case something goes wrong
             if (team == "A") {
                 color = teamAColor;
             } else if (team == "B") {
                 color = teamBColor;
             }
 
-            const player: Player = new Player(position, startPosition, team, color, speed, precision, jerseyNumber); // keine Ahnung wie man sie verteilt
-            // bekommen noch Geschwindigkeit und Präzision
+            const player: Player = new Player(position, startPosition, team, color, speed, precision, jerseyNumber);
 
-            //Feldspieler in moveables, alle Spieler in allPlayers, Ersatzspieler in sparePlayers
+            //push players to moveables but also to allPlayers array
             allPlayer.push(player);
             moveables.push(player);
         }
     }
 
+    //decide what should happen when the user clicks
     function handleCanvasClick(_event: MouseEvent): void {
-        if (_event.shiftKey || _event.altKey) {
+        if (_event.shiftKey || _event.altKey) { //if one of the keys is pressed, get the player if there is one
             getPlayer(_event);
-        } else if (animation == false) { // nur wenn jemand am Ball ist kann man klicken
+        } else if (animation == false) { //only possible to shoot the ball if someone is at the ball
             shootBall(_event);
         }
     }
@@ -231,7 +240,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         ball.hitGoalB = false;
 
         //get the position of the click and move the ball to this position
-        //Mouseposition:
         let xpos: number = 0;
         let ypos: number = 0;
 
@@ -242,9 +250,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
             ypos = _event.offsetY;
         }
 
-        //wenn position gesetzt wurde, dem ball als ziel mitgeben:
+        //when there was a mouseposition given, set it as the balls destination
         if (xpos > 0 && ypos > 0) {
-            //Kicksound
+            //play the sound of the kick
             playSample(3);
             //move ball
             ball.destination = new Vector(xpos, ypos);
@@ -255,31 +263,30 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     function handleLeftGoal(): void {
         goalsB++;
-        playSample(2); // Jubeln
+        playSample(2); //cheering
     }
 
     function handleRightGoal(): void {
         goalsA++;
-        playSample(2); // Jubeln
+        playSample(2); //cheering
     }
 
-    // Spielerinformation bekommen
+    //if the click happened on a player, get the player
     function getPlayer(_event: MouseEvent): void {
 
-        // Aktuelle Mouseposition
+        //current mouseposition
         let clickPosition: Vector = new Vector(_event.offsetX, _event.offsetY);
 
-        // getPlayerClick von der aktuellen Klickposition
+        //get the player who was clicked
         let playerClicked: Player | null = getPlayerAtMousePosition(clickPosition);
 
-        // wenn unter der Mouseposition ein Spieler ist, werden die Informationen angezeigt
+        //if there is a player, show his information or be able to drag him
         if (playerClicked) {
             if (_event.shiftKey) {
                 showPlayerInformation(playerClicked);
             } else if (_event.altKey) {
                 listenToMouseMove = true;
                 draggedPlayer = playerClicked;
-                //console.log("draggedPlayer: " + draggedPlayer);
             }
         }
     }
@@ -296,9 +303,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     //check if draggedPlayer is overlapping with a player on the field, if yes, exchange their positions
     function switchPlayer(_event: MouseEvent): void {
-        // Aktuelle Mouseposition
+        //current mouseposition
         let mousePosition: Vector = new Vector(_event.offsetX, _event.offsetY);
-        // getPlayerClick von der aktuellen Mausposition
+        //get the player who is at the current mouseposition
         let playerAtMousePosition: Player | null = getPlayerAtMousePosition(mousePosition);
 
         if (playerAtMousePosition && draggedPlayer) {
@@ -310,29 +317,33 @@ namespace EIA2_Endaufgabe_HannahDuerr {
                 //exchange their start positions
                 draggedPlayer.startPosition = playerStartposition;
                 playerAtMousePosition.startPosition = draggedPlayerStartposition;
+                //set the position of the field player to its new startposition so that he appears outside the field
                 playerAtMousePosition.position = draggedPlayerStartposition;
 
-                //die Zuweisung von draggedPlayer entfernen
+                //remove dragged player, otherwise it will stick to the cursor
                 draggedPlayer = undefined;
             } else {
+                //if the conditions for the switch are not given, set dragged player back to its startposition
                 draggedPlayer.position = draggedPlayer.startPosition;
                 draggedPlayer = undefined;
             }
         }
     }
 
-    // den geklickten Spieler bekommen
+    //get the player who was clicked
     function getPlayerAtMousePosition(_clickPosition: Vector): Player | null {
 
+        //iterate over player array and check for each player if it is at the same position as the mouse
         for (let player of allPlayer) {
-            if (player.isClicked(_clickPosition) && player != draggedPlayer) //funktion mehr funktion als vorher gedacht?
+            //for use in switchPlayer, ignore the draggedPlayer in this check
+            if (player.isClicked(_clickPosition) && player != draggedPlayer) 
                 return player;
         }
 
-        return null; // Rückgabewert null, wenn kein Spieler unter der Mouseposition ist
+        return null; //returns null when there's no player at the current mouse position
     }
 
-    // Player Display
+    //display for the player information
     function showPlayerInformation(_playerClicked: Player): void {
         playerDisplay.innerHTML = "<b>Number: </b>" + _playerClicked.jerseyNumber + " | <b>Speed: </b> " + Math.round(_playerClicked.speed) + " | <b>Precision: </b>" + Math.round(_playerClicked.precision);
     }
@@ -354,6 +365,7 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     }
 
     function drawUpdate(): void {
+        //draw the field and all moveables & players
         field.draw();
 
         for (let moveable of moveables) {

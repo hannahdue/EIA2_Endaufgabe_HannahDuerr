@@ -21,11 +21,11 @@ var EIA2_Endaufgabe_HannahDuerr;
     let field;
     let draggedPlayer;
     EIA2_Endaufgabe_HannahDuerr.sound = [];
-    EIA2_Endaufgabe_HannahDuerr.sound[0] = new Audio("../sounds/kickoff.mp3");
-    EIA2_Endaufgabe_HannahDuerr.sound[1] = new Audio("../sounds/cheering.mp3");
-    EIA2_Endaufgabe_HannahDuerr.sound[2] = new Audio("../sounds/goal.mp3");
-    EIA2_Endaufgabe_HannahDuerr.sound[3] = new Audio("../sounds/kick.mp3");
-    EIA2_Endaufgabe_HannahDuerr.sound[4] = new Audio("../sounds/backgroundmusic.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[0] = new Audio("sounds/kickoff.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[1] = new Audio("sounds/cheering.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[2] = new Audio("sounds/goal.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[3] = new Audio("sounds/kick.mp3");
+    EIA2_Endaufgabe_HannahDuerr.sound[4] = new Audio("sounds/backgroundmusic.mp3");
     let SOCCER_EVENT;
     (function (SOCCER_EVENT) {
         SOCCER_EVENT["RIGHTGOAL_HIT"] = "rightGoalHit";

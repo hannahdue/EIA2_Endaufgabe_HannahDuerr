@@ -27,11 +27,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let draggedPlayer: Player | undefined;
 
     export let sound: HTMLAudioElement[] = [];
-    sound[0] = new Audio("../sounds/kickoff.mp3");
-    sound[1] = new Audio("../sounds/cheering.mp3");
-    sound[2] = new Audio("../sounds/goal.mp3");
-    sound[3] = new Audio("../sounds/kick.mp3");
-    sound[4] = new Audio("../sounds/backgroundmusic.mp3");
+    sound[0] = new Audio("sounds/kickoff.mp3");
+    sound[1] = new Audio("sounds/cheering.mp3");
+    sound[2] = new Audio("sounds/goal.mp3");
+    sound[3] = new Audio("sounds/kick.mp3");
+    sound[4] = new Audio("sounds/backgroundmusic.mp3");
 
     export enum SOCCER_EVENT {
         RIGHTGOAL_HIT = "rightGoalHit",

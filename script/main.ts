@@ -1,3 +1,12 @@
+/*
+Endaufgabe: Fußball Trainings Simulation
+Name: Hannah Dürr
+Matrikel: 263217
+Datum: 19.07.21
+Quellen: Lektionen aus dem Unterricht (insbesondere Asteroids), MDN und W3School
+Diese Abgabe ist in Zusammmenarbeit mit Mona Stingl entstanden
+*/
+
 namespace EIA2_Endaufgabe_HannahDuerr {
 
     //export variables that need to be accessed from classes

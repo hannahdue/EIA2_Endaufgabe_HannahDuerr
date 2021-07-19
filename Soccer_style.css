@@ -3,6 +3,7 @@ body, html {
     font-family: 'Montserrat', Arial, sans-serif;
     background-color: lightgray;
     line-height: 1.5;
+    font-size: 14px;
 }
 
 h2 {
@@ -119,8 +120,8 @@ div#settings {
 }
 
 fieldset {
-    margin: 20px;
-    padding: 15px;
+    margin: 10px;
+    padding: 10px;
     text-align: left;
     border-radius: 5px;
     border: solid 0.5px;
@@ -128,10 +129,10 @@ fieldset {
 
 div#startbutton {
     padding: 10px;
-    width: 40%;
+    width: 30%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
     font-size: 32px;
     background-color: black;

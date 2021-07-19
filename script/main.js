@@ -4,7 +4,6 @@ var EIA2_Endaufgabe_HannahDuerr;
     EIA2_Endaufgabe_HannahDuerr.animation = false;
     let landingPage;
     let startbutton;
-    let restartbutton;
     let instructionbutton;
     let instructionBoard;
     let playerDisplay;
@@ -16,7 +15,6 @@ var EIA2_Endaufgabe_HannahDuerr;
     let maximumPrecision = 5;
     let teamAColor = "66b2ff";
     let teamBColor = "ff3333";
-    let animationInterval;
     let listenToMouseMove = false;
     let field;
     let draggedPlayer;
@@ -81,12 +79,10 @@ var EIA2_Endaufgabe_HannahDuerr;
         //find html elements and install listeners on buttons to toggle between settings and simulation
         landingPage = document.querySelector("div#settingsContainer");
         startbutton = document.querySelector("div#startbutton");
-        restartbutton = document.querySelector("span#restart");
         instructionbutton = document.querySelector("span#instruction");
         instructionBoard = document.querySelector("span#instructionBoard");
         playerDisplay = document.querySelector("div#playerInformation");
         startbutton.addEventListener("click", startSimulation);
-        restartbutton.addEventListener("click", restartSimulation);
         instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
         canvas.addEventListener("mousedown", handleCanvasClick);
         canvas.addEventListener("mousemove", dragPlayer);
@@ -113,6 +109,9 @@ var EIA2_Endaufgabe_HannahDuerr;
         getUserPreferences();
         //create the background and the ball
         field = new EIA2_Endaufgabe_HannahDuerr.Playingfield();
+        console.log(moveables);
+        console.log(allPlayer);
+        console.log(EIA2_Endaufgabe_HannahDuerr.animation);
         //create people
         createPeopleOnField();
         //create ball
@@ -123,28 +122,11 @@ var EIA2_Endaufgabe_HannahDuerr;
         //update draw methods all the time
         window.setInterval(drawUpdate, 20);
         //animate only when animation is on
-        animationInterval = window.setInterval(function () {
+        window.setInterval(function () {
             if (EIA2_Endaufgabe_HannahDuerr.animation == true)
                 animationUpdate();
         }, 20);
         console.log("Simulation started.");
-    }
-    function restartSimulation() {
-        //show setings container again
-        landingPage.style.display = "";
-        //stop animation and reset values to default
-        EIA2_Endaufgabe_HannahDuerr.animation = false;
-        minimumSpeed = 1;
-        maximumSpeed = 5;
-        minimumPrecision = 1;
-        maximumPrecision = 5;
-        teamAColor = "66b2ff";
-        teamBColor = "ff3333";
-        //empty arrays of current objects in the simulation
-        moveables = [];
-        allPlayer = [];
-        //animationsintervall beenden
-        window.clearInterval(animationInterval);
     }
     //Show and hide simulation instructions
     function showInstruction() {

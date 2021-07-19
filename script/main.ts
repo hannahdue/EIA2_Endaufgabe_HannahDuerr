@@ -7,11 +7,9 @@ namespace EIA2_Endaufgabe_HannahDuerr {
 
     let landingPage: HTMLDivElement;
     let startbutton: HTMLDivElement;
-    let restartbutton: HTMLSpanElement;
     let instructionbutton: HTMLSpanElement;
     let instructionBoard: HTMLSpanElement;
     let playerDisplay: HTMLDivElement;
-
 
     let goalsA: number = 0;
     let goalsB: number = 0;
@@ -21,7 +19,6 @@ namespace EIA2_Endaufgabe_HannahDuerr {
     let maximumPrecision: number = 5;
     let teamAColor: string = "66b2ff";
     let teamBColor: string = "ff3333";
-    let animationInterval: number;
     let listenToMouseMove: boolean = false;
     let field: Playingfield;
     let draggedPlayer: Player | undefined;
@@ -100,13 +97,11 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //find html elements and install listeners on buttons to toggle between settings and simulation
         landingPage = <HTMLDivElement>document.querySelector("div#settingsContainer");
         startbutton = <HTMLDivElement>document.querySelector("div#startbutton");
-        restartbutton = <HTMLSpanElement>document.querySelector("span#restart");
         instructionbutton = <HTMLSpanElement>document.querySelector("span#instruction");
         instructionBoard = <HTMLSpanElement>document.querySelector("span#instructionBoard");
         playerDisplay = <HTMLDivElement>document.querySelector("div#playerInformation");
 
         startbutton.addEventListener("click", startSimulation);
-        restartbutton.addEventListener("click", restartSimulation);
         instructionbutton.addEventListener("click", showInstruction); // Spielanleitung
 
         canvas.addEventListener("mousedown", handleCanvasClick);
@@ -140,6 +135,10 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //create the background and the ball
         field = new Playingfield();
 
+        console.log(moveables);
+        console.log(allPlayer);
+        console.log(animation);
+
         //create people
         createPeopleOnField();
 
@@ -152,33 +151,12 @@ namespace EIA2_Endaufgabe_HannahDuerr {
         //update draw methods all the time
         window.setInterval(drawUpdate, 20);
         //animate only when animation is on
-        animationInterval = window.setInterval(function (): void {
+        window.setInterval(function (): void {
             if (animation == true)
                 animationUpdate();
-        },                                     20);
+        },                 20);
 
         console.log("Simulation started.");
-    }
-
-    function restartSimulation(): void {
-        //show setings container again
-        landingPage.style.display = "";
-
-        //stop animation and reset values to default
-        animation = false;
-        minimumSpeed = 1;
-        maximumSpeed = 5;
-        minimumPrecision = 1;
-        maximumPrecision = 5;
-        teamAColor = "66b2ff";
-        teamBColor = "ff3333";
-
-        //empty arrays of current objects in the simulation
-        moveables = [];
-        allPlayer = [];
-
-        //animationsintervall beenden
-        window.clearInterval(animationInterval);
     }
 
     //Show and hide simulation instructions
